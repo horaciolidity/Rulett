@@ -11,18 +11,12 @@
     <h1>Ruleta Worldcoin</h1>
     <div class="ruleta-contenedor">
         <div id="ruleta" class="ruleta">
-            <div class="sector">Premio 1</div>
-            <div class="sector">Premio 2</div>
-            <div class="sector">Premio 3</div>
-            <div class="sector">Premio 4</div>
-            <div class="sector">Premio 5</div>
-            <div class="sector">Premio 6</div>
-            <div class="sector">Premio 7</div>
-            <div class="sector">Premio 8</div>
+            <!-- Los premios se agregan dinámicamente -->
         </div>
         <div class="uña"></div>
     </div>
     <button id="girar">Girar Ruleta</button>
+    <div id="contador">Suma de Premios: 0</div>
   <style>body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -47,8 +41,6 @@ h1 {
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    border: 2px solid #333;
-    overflow: hidden;
     position: relative;
     transition: transform 5s cubic-bezier(0, 0.99, 0.44, 0.99);
 }
@@ -58,19 +50,19 @@ h1 {
     height: 100%;
     position: absolute;
     transform-origin: 50% 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    clip-path: polygon(50% 100%, 100% 0, 0 0);
 }
 
-.sector:nth-child(1) { transform: rotate(0deg);   background-color: #FFD700; }
-.sector:nth-child(2) { transform: rotate(45deg);  background-color: #FF8C00; }
-.sector:nth-child(3) { transform: rotate(90deg);  background-color: #FF6347; }
-.sector:nth-child(4) { transform: rotate(135deg); background-color: #98FB98; }
-.sector:nth-child(5) { transform: rotate(180deg); background-color: #87CEEB; }
-.sector:nth-child(6) { transform: rotate(225deg); background-color: #DA70D6; }
-.sector:nth-child(7) { transform: rotate(270deg); background-color: #8A2BE2; }
-.sector:nth-child(8) { transform: rotate(315deg); background-color: #D2691E; }
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#contador {
+    margin-top: 20px;
+}
 
 .uña {
     width: 20px;
@@ -83,34 +75,42 @@ h1 {
     border-radius: 50%;
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
 
 </style>
     
 </body>
-  <script>document.getElementById('girar').addEventListener('click', function() {
-    var ruleta = document.getElementById('ruleta');
-    var sectores = ruleta.getElementsByClassName('sector');
-    for (var i = 0; i < sectores.length; i++) {
-        sectores[i].classList.remove('iluminado');
-    }
+  <script>const premios = [100, 200, 300, 400, 500, 600, 700, 800];
+let sumaPremios = 0;
 
-    var grados = Math.floor(5000 + Math.random() * 5000); // Grados aleatorios para girar
-    ruleta.style.transition = 'transform 5s cubic-bezier(0, 0.99, 0.44, 0.99)';
-    ruleta.style.transform = 'rotate(' + grados + 'deg)';
+function crearSectores() {
+    const ruleta = document.getElementById('ruleta');
+    const cantidadSectores = premios.length;
+    const angulo = 360 / cantidadSectores;
 
-    var premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6', 'Premio 7', 'Premio 8'];
-    var indicePremio = Math.floor(((360 - (grados % 360)) / 45) % 8);
+    premios.forEach((premio, index) => {
+        const sector = document.createElement('div');
+        sector.className = 'sector';
+        sector.style.backgroundColor = `hsl(${index * (360 / cantidadSectores)}, 100%, 50%)`;
+        sector.style.transform = `rotate(${index * angulo}deg)`;
+        ruleta.appendChild(sector);
+    });
+}
+
+crearSectores();
+
+document.getElementById('girar').addEventListener('click', function() {
+    const ruleta = document.getElementById('ruleta');
+    const grados = Math.floor(5000 + Math.random() * 5000);
+    const indicePremio = Math.floor(((360 - (grados % 360)) / (360 / premios.length)) % premios.length);
     
-    setTimeout(function() {
-        sectores[indicePremio].classList.add('iluminado');
-        alert('Felicidades, ganaste: ' + premios[indicePremio]);
-    }, 5000); // Espera a que termine la animación
+    ruleta.style.transition = 'transform 5s cubic-bezier(0, 0.99, 0.44, 0.99)';
+    ruleta.style.transform = `rotate(${grados}deg)`;
+
+    setTimeout(() => {
+        sumaPremios += premios[indicePremio];
+        document.getElementById('contador').innerText = `Suma de Premios: ${sumaPremios}`;
+        alert(`Felicidades, ganaste: ${premios[indicePremio]}`);
+    }, 5000);
 });
 
 </script>
