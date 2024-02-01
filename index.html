@@ -8,7 +8,11 @@
 </head>
 <body>
     <h1>Pizarra de Premios</h1>
+    <div id="vidas">Oportunidades: 3</div>
     <div id="pizarra"></div>
+    <h2>Premios obtenidos:</h2>
+    <div id="premiosObtenidos"></div>
+    <script src="script.js"></script>
 
 
   <style>body {
@@ -50,33 +54,70 @@ h1 {
     background-color: #4CAF50;
     color: white;
 }
+#vidas, #premiosObtenidos {
+    margin: 20px;
+    font-size: 20px;
+}
+
+#premiosObtenidos {
+    margin-top: 10px;
+}
 
 
 
 </style>
     
 </body>
-  <script>const premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6', 'Premio 7', 'Premio 8'];
-const pizarra = document.getElementById('pizarra');
+  <script>document.addEventListener('DOMContentLoaded', () => {
+    const premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6', 'Premio 7', 'Premio 8'];
+    let oportunidades = 3;
+    let premiosObtenidos = [];
 
-function crearCasilleros() {
-    for (let i = 0; i < 16; i++) {
-        const casillero = document.createElement('div');
-        casillero.classList.add('casillero');
-        casillero.dataset.premio = premios[Math.floor(Math.random() * premios.length)]; // Asignar un premio al azar a cada casillero
-        casillero.addEventListener('click', revelarPremio);
-        pizarra.appendChild(casillero);
+    // Actualiza el texto de oportunidades restantes
+    function actualizarOportunidades() {
+        document.getElementById('vidas').innerText = `Oportunidades: ${oportunidades}`;
     }
-}
 
-function revelarPremio() {
-    this.classList.add('revelado');
-    this.innerHTML = this.dataset.premio;
-    this.removeEventListener('click', revelarPremio); // Evitar que el casillero sea clickeado nuevamente
-}
+    // Agrega los premios obtenidos al contenedor correspondiente
+    function mostrarPremiosObtenidos() {
+        document.getElementById('premiosObtenidos').innerText = premiosObtenidos.join(', ');
+    }
 
-crearCasilleros();
+    // Función para manejar el click en un casillero
+    function elegirCasillero(event) {
+        if (oportunidades > 0) {
+            const casillero = event.target;
+            const premio = casillero.getAttribute('data-premio');
+            premiosObtenidos.push(premio);
+            casillero.innerText = premio;
+            casillero.style.pointerEvents = 'none'; // Deshabilitar más clicks en este casillero
+            casillero.style.backgroundColor = '#ddd'; // Cambio visual para indicar que este casillero ya fue elegido
+            oportunidades--;
+            actualizarOportunidades();
+            mostrarPremiosObtenidos();
 
+            if (oportunidades === 0) {
+                // Opcional: Mostrar mensaje final o deshabilitar todos los casilleros
+                alert('No quedan más oportunidades');
+            }
+        }
+    }
+
+    // Inicialización de la pizarra de premios
+    function inicializarPizarra() {
+        const pizarra = document.getElementById('pizarra');
+        for (let i = 0; i < premios.length; i++) {
+            const casillero = document.createElement('div');
+            casillero.classList.add('casillero');
+            casillero.setAttribute('data-premio', premios[i]);
+            casillero.addEventListener('click', elegirCasillero);
+            pizarra.appendChild(casillero);
+        }
+        actualizarOportunidades();
+    }
+
+    inicializarPizarra();
+});
 
 </script>
 </html>
