@@ -1,21 +1,16 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruleta Worldcoin</title>
+    <title>Pizarra de Premios</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Ruleta Worldcoin</h1>
-    <div class="ruleta-contenedor">
-        <div id="ruleta" class="ruleta">
-            <!-- Los sectores se agregan aquí -->
-        </div>
-        <div class="uña"></div>
-    </div>
-    <button id="girar">Girar Ruleta</button>
-    <div id="contador">Suma de Premios: 0</div>
+    <h1>Pizarra de Premios</h1>
+    <div id="pizarra"></div>
+
+
   <style>body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -32,101 +27,56 @@ h1 {
     margin-bottom: 20px;
 }
 
-.ruleta-contenedor {
-    position: relative;
+#pizarra {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
 }
 
-.ruleta {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    border: 2px solid #333;
-    overflow: hidden;
-    position: relative;
-    transition: transform 5s cubic-bezier(0, 0.99, 0.44, 0.99);
-}
-
-.sector {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    transform-origin: 50% 100%;
+.casillero {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
     display: flex;
-    justify-content: center;
     align-items: center;
-    clip-path: polygon(50% 100%, 100% 0, 0 0);
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
+    justify-content: center;
     cursor: pointer;
+    border: 2px solid #999;
+    font-size: 20px;
+    color: #333;
 }
 
-#contador {
-    margin-top: 20px;
+.revelado {
+    background-color: #4CAF50;
+    color: white;
 }
 
-.uña {
-    width: 20px;
-    height: 20px;
-    background-color: #333;
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 50%;
-}
-
-.iluminado {
-    box-shadow: 0 0 10px 5px yellow;
-}
 
 
 </style>
     
 </body>
   <script>const premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6', 'Premio 7', 'Premio 8'];
-let sumaPremios = 0;
+const pizarra = document.getElementById('pizarra');
 
-function crearSectores() {
-    const ruleta = document.getElementById('ruleta');
-    const cantidadSectores = premios.length;
-    const angulo = 360 / cantidadSectores;
-
-    premios.forEach((premio, index) => {
-        const sector = document.createElement('div');
-        sector.className = 'sector';
-        sector.textContent = premio;
-        sector.style.backgroundColor = `hsl(${index * (360 / cantidadSectores)}, 100%, 50%)`;
-        sector.style.transform = `rotate(${index * angulo}deg)`;
-        ruleta.appendChild(sector);
-    });
+function crearCasilleros() {
+    for (let i = 0; i < 16; i++) {
+        const casillero = document.createElement('div');
+        casillero.classList.add('casillero');
+        casillero.dataset.premio = premios[Math.floor(Math.random() * premios.length)]; // Asignar un premio al azar a cada casillero
+        casillero.addEventListener('click', revelarPremio);
+        pizarra.appendChild(casillero);
+    }
 }
 
-crearSectores();
+function revelarPremio() {
+    this.classList.add('revelado');
+    this.innerHTML = this.dataset.premio;
+    this.removeEventListener('click', revelarPremio); // Evitar que el casillero sea clickeado nuevamente
+}
 
-document.getElementById('girar').addEventListener('click', function() {
-    const ruleta = document.getElementById('ruleta');
-    const sectores = ruleta.getElementsByClassName('sector');
-    for (let i = 0; i < sectores.length; i++) {
-        sectores[i].classList.remove('iluminado');
-    }
+crearCasilleros();
 
-    const grados = Math.floor(5000 + Math.random() * 5000);
-    const indicePremio = Math.floor(((360 - (grados % 360)) / (360 / premios.length)) % premios.length);
-    
-    ruleta.style.transition = 'transform 5s cubic-bezier(0, 0.99, 0.44, 0.99)';
-    ruleta.style.transform = `rotate(${grados}deg)`;
-
-    setTimeout(() => {
-        sectores[indicePremio].classList.add('iluminado');
-        alert(`Felicidades, ganaste: ${premios[indicePremio]}`);
-        sumaPremios += 1; // Asumiendo que cada premio vale 1, ajustar según sea necesario
-        document.getElementById('contador').innerText = `Suma de Premios: ${sumaPremios}`;
-    }, 5000);
-});
 
 </script>
 </html>
