@@ -77,24 +77,39 @@ h1 {
     
 </body>
   <script>document.addEventListener('DOMContentLoaded', () => {
+
+    const usuarioDemo = {
+        username: "usuarioDemo",
+        password: "contraseñaDemo"
+    };
+    localStorage.setItem('usuarioDemo', JSON.stringify(usuarioDemo));
+    
     const premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6', 'Premio 7', 'Premio 8'];
     let oportunidades = 3;
     let premiosObtenidos = [];
 
-    document.getElementById('login').addEventListener('click', function() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        // Simulación de un inicio de sesión simple
-        if(username === "user" && password === "pass") { // Reemplaza con tu lógica de validación
-            // Guarda el estado de la sesión en localStorage
+   document.getElementById('login').addEventListener('click', function() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Intenta recuperar los datos del usuario desde localStorage
+    const userData = localStorage.getItem(username);
+    
+    if (userData) {
+        const userInfo = JSON.parse(userData);
+        if (userInfo.password === password) {
+            // Usuario y contraseña correctos
             localStorage.setItem('isLoggedIn', 'true');
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
         } else {
-            alert('Usuario o contraseña incorrecta');
+            alert('Contraseña incorrecta');
         }
-    });
+    } else {
+        alert('Usuario no encontrado');
+    }
+});
+
 
     document.getElementById('recargar').addEventListener('click', function() {
         oportunidades = 3; // Restablece las oportunidades a 3
