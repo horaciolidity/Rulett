@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta de Premios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <style>body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.ruleta-contenedor {
+    text-align: center;
+}
+
+.ruleta {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    overflow: hidden;
+    position: relative;
+    transform: rotate(0deg);
+    transition: transform 4s ease-out;
+}
+
+.sector {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-origin: 50% 100%;
+}
+
+.sector:nth-child(1) { transform: rotate(0deg);   background-color: #FFD700; }
+.sector:nth-child(2) { transform: rotate(60deg);  background-color: #FF8C00; }
+.sector:nth-child(3) { transform: rotate(120deg); background-color: #FF6347; }
+.sector:nth-child(4) { transform: rotate(180deg); background-color: #98FB98; }
+.sector:nth-child(5) { transform: rotate(240deg); background-color: #87CEEB; }
+.sector:nth-child(6) { transform: rotate(300deg); background-color: #DA70D6; }
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+</style>
+    <div class="ruleta-contenedor">
+        <div id="ruleta" class="ruleta">
+            <div class="sector">Premio 1</div>
+            <div class="sector">Premio 2</div>
+            <div class="sector">Premio 3</div>
+            <div class="sector">Premio 4</div>
+            <div class="sector">Premio 5</div>
+            <div class="sector">Premio 6</div>
+        </div>
+        <button id="girar">Girar Ruleta</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+  <script>document.getElementById('girar').addEventListener('click', function() {
+    var grados = Math.floor(5000 + Math.random() * 5000); // Grados aleatorios para girar
+    var ruleta = document.getElementById('ruleta');
+    ruleta.style.transform = 'rotate(' + grados + 'deg)';
+
+    var premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6'];
+    var premioSeleccionado = premios[Math.floor(grados / 360) % premios.length];
+    
+    setTimeout(function() {
+        alert('Felicidades, ganaste: ' + premioSeleccionado);
+    }, 4000); // Espera a que termine la animación
+});
+</script>
+</html>
