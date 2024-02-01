@@ -7,9 +7,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div id="login-container">
+    <input type="text" id="username" placeholder="Usuario" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button id="login">Iniciar Sesión</button>
+</div>
     <h1>Pizarra de Premios</h1>
     <div id="vidas">Oportunidades: 3</div>
     <div id="pizarra"></div>
+    <button id="recargar">Recargar Oportunidades</button>
+
     <h2>Premios obtenidos:</h2>
     <div id="premiosObtenidos"></div>
     <script src="script.js"></script>
@@ -73,6 +81,28 @@ h1 {
     let oportunidades = 3;
     let premiosObtenidos = [];
 
+    document.getElementById('login').addEventListener('click', function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Simulación de un inicio de sesión simple
+        if(username === "user" && password === "pass") { // Reemplaza con tu lógica de validación
+            // Guarda el estado de la sesión en localStorage
+            localStorage.setItem('isLoggedIn', 'true');
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+        } else {
+            alert('Usuario o contraseña incorrecta');
+        }
+    });
+
+    document.getElementById('recargar').addEventListener('click', function() {
+        oportunidades = 3; // Restablece las oportunidades a 3
+        premiosObtenidos = []; // Limpia los premios obtenidos
+        actualizarOportunidades();
+        mostrarPremiosObtenidos();
+        // Opcional: Restablecer los casilleros para permitir una nueva selección
+    });
     // Actualiza el texto de oportunidades restantes
     function actualizarOportunidades() {
         document.getElementById('vidas').innerText = `Oportunidades: ${oportunidades}`;
@@ -102,6 +132,7 @@ h1 {
             }
         }
     }
+   
 
     // Inicialización de la pizarra de premios
     function inicializarPizarra() {
