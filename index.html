@@ -8,11 +8,22 @@
 </head>
 <body>
 
-<div id="login-container">
-    <input type="text" id="username" placeholder="Usuario" />
-    <input type="password" id="password" placeholder="Contraseña" />
-    <button id="login">Iniciar Sesión</button>
+<div id="registro">
+    <h2>Registro</h2>
+    <input type="text" id="registroUsuario" placeholder="Usuario">
+    <input type="password" id="registroContrasena" placeholder="Contraseña">
+    <button id="btnRegistro">Registrarse</button>
+    <p>¿Ya tienes cuenta? <span id="irALogin" style="cursor:pointer; color:blue;">Iniciar sesión</span></p>
 </div>
+
+<div id="login">
+    <h2>Iniciar Sesión</h2>
+    <input type="text" id="loginUsuario" placeholder="Usuario">
+    <input type="password" id="loginContrasena" placeholder="Contraseña">
+    <button id="btnLogin">Iniciar Sesión</button>
+    <p>¿No tienes cuenta? <span id="irARegistro" style="cursor:pointer; color:blue;">Registrarse</span></p>
+</div>
+
     <h1>Pizarra de Premios</h1>
     <div id="vidas">Oportunidades: 3</div>
     <div id="pizarra"></div>
@@ -78,37 +89,66 @@ h1 {
 </body>
   <script>document.addEventListener('DOMContentLoaded', () => {
 
-    const usuarioDemo = {
-        username: "usuarioDemo",
-        password: "contraseñaDemo"
-    };
-    localStorage.setItem('usuarioDemo', JSON.stringify(usuarioDemo));
-    
-    const premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4', 'Premio 5', 'Premio 6', 'Premio 7', 'Premio 8'];
-    let oportunidades = 3;
-    let premiosObtenidos = [];
+        mostrarRegistro(); // Muestra la pantalla de registro por defecto
 
-   document.getElementById('login').addEventListener('click', function() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    // Intenta recuperar los datos del usuario desde localStorage
-    const userData = localStorage.getItem(username);
-    
-    if (userData) {
-        const userInfo = JSON.parse(userData);
-        if (userInfo.password === password) {
-            // Usuario y contraseña correctos
-            localStorage.setItem('isLoggedIn', 'true');
-            document.getElementById('login-container').style.display = 'none';
-            document.getElementById('game-container').style.display = 'block';
+    // Maneja el registro de usuarios
+    document.getElementById('btnRegistro').addEventListener('click', function() {
+        const usuario = document.getElementById('registroUsuario').value;
+        const contrasena = document.getElementById('registroContrasena').value;
+        if (usuario && contrasena) {
+            const userData = {
+                username: usuario,
+                password: contrasena
+            };
+            localStorage.setItem(usuario, JSON.stringify(userData));
+            alert('Registro exitoso. Por favor, inicie sesión.');
+            mostrarLogin();
         } else {
-            alert('Contraseña incorrecta');
+            alert('Por favor, complete todos los campos.');
         }
-    } else {
-        alert('Usuario no encontrado');
+    });
+
+    // Maneja el inicio de sesión
+    document.getElementById('btnLogin').addEventListener('click', function() {
+        const usuario = document.getElementById('loginUsuario').value;
+        const contrasena = document.getElementById('loginContrasena').value;
+        const userData = localStorage.getItem(usuario);
+        if (userData) {
+            const userInfo = JSON.parse(userData);
+            if (userInfo.password === contrasena) {
+                alert('Inicio de sesión exitoso.');
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                inicializarPizarra(); // Inicializa el juego tras el inicio de sesión
+            } else {
+                alert('Contraseña incorrecta');
+            }
+        } else {
+            alert('Usuario no encontrado');
+        }
+    });
+
+    // Cambia a la vista de registro
+    document.getElementById('irARegistro').addEventListener('click', function() {
+        mostrarRegistro();
+    });
+
+    // Cambia a la vista de inicio de sesión
+    document.getElementById('irALogin').addEventListener('click', function() {
+        mostrarLogin();
+    });
+
+    function mostrarLogin() {
+        document.getElementById('login').style.display = 'block';
+        document.getElementById('registro').style.display = 'none';
+        document.getElementById('game-container').style.display = 'none';
     }
-});
+
+    function mostrarRegistro() {
+        document.getElementById('registro').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('game-container').style.display = 'none';
+    }
 
 
     document.getElementById('recargar').addEventListener('click', function() {
