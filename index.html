@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div id="registro">
+<div id="registro" style="display:none;">
     <h2>Registro</h2>
     <input type="text" id="registroUsuario" placeholder="Usuario">
     <input type="password" id="registroContrasena" placeholder="Contraseña">
@@ -16,13 +16,15 @@
     <p>¿Ya tienes cuenta? <span id="irALogin" style="cursor:pointer; color:blue;">Iniciar sesión</span></p>
 </div>
 
-<div id="login">
+<div id="login" style="display:none;">
     <h2>Iniciar Sesión</h2>
     <input type="text" id="loginUsuario" placeholder="Usuario">
     <input type="password" id="loginContrasena" placeholder="Contraseña">
     <button id="btnLogin">Iniciar Sesión</button>
     <p>¿No tienes cuenta? <span id="irARegistro" style="cursor:pointer; color:blue;">Registrarse</span></p>
 </div>
+    <div id="game-container" style="display:none;">
+
 
     <h1>Pizarra de Premios</h1>
     <div id="vidas">Oportunidades: 3</div>
@@ -31,7 +33,6 @@
 
     <h2>Premios obtenidos:</h2>
     <div id="premiosObtenidos"></div>
-    <script src="script.js"></script>
 
 
   <style>body {
