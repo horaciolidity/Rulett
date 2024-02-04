@@ -81,19 +81,17 @@ button:hover {
 
 
 .casillero {
-    width: 100px;
-    height: 100px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: none; /* Removido para un diseño más limpio */
-    font-size: 20px;
-    color: #333;
-    transition: transform 0.3s ease;
-    border-radius: 10px; /* Bordes redondeados */
+    width: 50px; /* Ajusta el ancho de los casilleros */
+    height: 50px; /* Ajusta el alto de los casilleros */
+    margin: 5px; /* Ajusta el espacio entre los casilleros */
+    display: inline-block; /* Mantiene los casilleros en línea */
+    border: 1px solid #000; /* Opcional: añade un borde para visualizar mejor los casilleros */
+    text-align: center; /* Alinea el texto (premio) en el centro del casillero */
+    vertical-align: top; /* Alineación vertical para cuando el texto ocupe más de una línea */
+    line-height: 50px; /* Centra verticalmente el texto dentro del casillero */
+    cursor: pointer; /* Cambia el cursor a una mano cuando se pasa sobre los casilleros */
 }
+
 
 .casillero:hover {
     transform: scale(1.1); /* Efecto de crecimiento al pasar el mouse */
@@ -234,7 +232,7 @@ function inicializarPremios() {
     premios.push('X10'); // 1 casillero x10
     for (let i = 0; i < 3; i++) premios.push('X2'); // 3 casilleros x2
     for (let i = 0; i < 7; i++) premios.push('X1'); // 7 casilleros x1
-    for (let i = 0; i < 10; i++) premios.push('X0.5'); // 10 casilleros x0.5
+    for (let i = 0; i < 10; i++) premios.push('X0.3'); // 10 casilleros x0.5
 
     // Rellenar el resto de casilleros con 'Sin premio'
     while (premios.length < 36) {
