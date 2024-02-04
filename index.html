@@ -71,6 +71,16 @@
 h1, h2 {
     color: #333;
 }
+    @keyframes parpadeo {
+    0% {opacity: 1;}
+    50% {opacity: 0.5;}
+    100% {opacity: 1;}
+}
+
+.parpadeo {
+    animation: parpadeo 1s infinite;
+}
+  
 
 input[type="text"], input[type="password"] {
     padding: 10px;
@@ -79,6 +89,15 @@ input[type="text"], input[type="password"] {
     border-radius: 5px;
     width: 80%; /* Ajusta al tamaño deseado */
 }
+
+.contador {
+            margin-bottom: 20px;
+        }
+
+        .contador span {
+            margin-right: 10px;
+        }
+      
 
 button {
     background-color: #007bff;
@@ -242,16 +261,24 @@ function iniciarContador(tipo) {
 function actualizarContador(tipo, valorInicial) {
     const incremento = 0.00001;
     const intervalos = [60000, 120000, 180000, 300000, 420000, 600000]; // Milisegundos
+    const spanElement = document.querySelector(`#contador${tipo} span`);
     setInterval(() => {
         if (valorInicial < 400) {
             valorInicial += incremento;
             localStorage.setItem(`contador${tipo}`, valorInicial);
-            document.querySelector(`#contador${tipo} span`).textContent = valorInicial.toFixed(5);
+            spanElement.textContent = valorInicial.toFixed(5);
+            
+            // Aplicar efecto de parpadeo
+            spanElement.classList.add('parpadeo');
+            
+            // Remover el efecto de parpadeo después de 1 segundo
+            setTimeout(() => {
+                spanElement.classList.remove('parpadeo');
+            }, 1000);
         }
     }, intervalos[tipo - 1]);
 }
-          
-      
+
     
 
 
