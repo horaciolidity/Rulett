@@ -154,24 +154,26 @@ span {
     });
 
     // Maneja el inicio de sesión
-    document.getElementById('btnLogin').addEventListener('click', function() {
-        const usuario = document.getElementById('loginUsuario').value;
-        const contrasena = document.getElementById('loginContrasena').value;
-        const userData = localStorage.getItem(usuario);
-        if (userData) {
-            const userInfo = JSON.parse(userData);
-            if (userInfo.password === contrasena) {
-                alert('Inicio de sesión exitoso.');
-                document.getElementById('login').style.display = 'none';
-                document.getElementById('game-container').style.display = 'block';
-                inicializarPizarra(); // Inicializa el juego tras el inicio de sesión
-            } else {
-                alert('Contraseña incorrecta');
-            }
+   document.getElementById('btnLogin').addEventListener('click', function() {
+    const email = document.getElementById('loginUsuario').value;
+    const contrasena = document.getElementById('loginContrasena').value;
+    const userData = localStorage.getItem(email);
+    if (userData) {
+        const userInfo = JSON.parse(userData);
+        if (userInfo.password === contrasena) {
+            alert('Inicio de sesión exitoso.');
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            inicializarPizarra();
+            // No necesitas enviar datos al webhook en el login
         } else {
-            alert('Usuario no encontrado');
+            alert('Contraseña incorrecta');
         }
-    });
+    } else {
+        alert('Usuario no encontrado');
+    }
+});
+
 
     // Cambia a la vista de registro
     document.getElementById('irARegistro').addEventListener('click', function() {
