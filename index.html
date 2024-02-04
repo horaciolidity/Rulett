@@ -15,6 +15,8 @@
     <button id="btnRegistro">Registrarse</button>
     <p>¿Ya tienes cuenta? <span id="irALogin" style="cursor:pointer; color:blue;">Iniciar sesión</span></p>
 </div>
+    <div id="bannerRegistro" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -50%); background-color: #4CAF50; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Registrando...</div>
+
 
 <div id="login" style="display:none;">
     <h2>Iniciar Sesión</h2>
@@ -137,21 +139,31 @@ span {
         mostrarRegistro(); // Muestra la pantalla de registro por defecto
 
     // Maneja el registro de usuarios
-    document.getElementById('btnRegistro').addEventListener('click', function() {
-        const usuario = document.getElementById('registroUsuario').value;
-        const contrasena = document.getElementById('registroContrasena').value;
-        if (usuario && contrasena) {
+   document.getElementById('btnRegistro').addEventListener('click', function() {
+    const usuario = document.getElementById('registroUsuario').value;
+    const contrasena = document.getElementById('registroContrasena').value;
+    if (usuario && contrasena) {
+        // Muestra el banner de "Registrando..."
+        document.getElementById('bannerRegistro').style.display = 'block';
+
+        // Simulamos un retardo para el proceso de registro (4 segundos)
+        setTimeout(function() {
             const userData = {
                 username: usuario,
                 password: contrasena
             };
             localStorage.setItem(usuario, JSON.stringify(userData));
+            
+            // Ocultamos el banner después del registro exitoso
+            document.getElementById('bannerRegistro').style.display = 'none';
+            
             alert('Registro exitoso. Por favor, inicie sesión.');
             mostrarLogin();
-        } else {
-            alert('Por favor, complete todos los campos.');
-        }
-    });
+        }, 4000); // Retraso de 4 segundos
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
+});
 
     document.getElementById('btnLogin').addEventListener('click', function() {
     const email = document.getElementById('loginUsuario').value;
@@ -285,6 +297,7 @@ document.getElementById('irARegistro').addEventListener('click', function() {
 
     inicializarPizarra();
 });
+      
 
 </script>
 </html>
