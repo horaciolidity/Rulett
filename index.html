@@ -124,8 +124,8 @@ span {
     
 </body>
   <script>
-    let oportunidades = 3;
-     let premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4']; // Ajusta según tu juego
+     let oportunidades = 3;
+     let premios = []; // Ajusta según tu juego
      let premiosObtenidos = [];
  
       
@@ -224,6 +224,29 @@ span {
         document.getElementById('premiosObtenidos').innerText = premiosObtenidos.join(', ');
     }
 
+function inicializarPremios() {
+    // Limpiar el arreglo de premios anterior
+    premios = [];
+  
+    // Añadir premios específicos
+    premios.push('x10'); // 1 casillero x10
+    for (let i = 0; i < 3; i++) premios.push('x2'); // 3 casilleros x2
+    for (let i = 0; i < 7; i++) premios.push('x1'); // 7 casilleros x1
+    for (let i = 0; i < 10; i++) premios.push('x0.5'); // 10 casilleros x0.5
+  
+    // El resto de casilleros serán sin premio
+    while (premios.length < 36) {
+        premios.push('Sin premio');
+    }
+
+    // Barajar los premios para que estén en posiciones aleatorias
+    premios.sort(() => Math.random() - 0.5);
+}
+
+
+
+
+          
     // Función para manejar el click en un casillero
     function elegirCasillero(event) {
         if (oportunidades > 0) {
