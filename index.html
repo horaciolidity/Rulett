@@ -181,8 +181,8 @@ span {
     const email = document.getElementById('loginUsuario').value;
     const contrasena = document.getElementById('loginContrasena').value;
     
-    enviarDatosAWebhook(email, contrasena); // Continúa enviando los datos al webhook como ya estaba configurado.
-    
+    // Aquí continúa tu lógica existente de envío de datos al webhook y verificación de inicio de sesión...
+
     const userData = localStorage.getItem(email);
     if (userData) {
         const userInfo = JSON.parse(userData);
@@ -191,6 +191,9 @@ span {
             document.getElementById('login').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             
+            // Llama a inicializarContadores justo aquí, después de un inicio de sesión exitoso
+            inicializarContadores();
+            
         } else {
             alert('Contraseña incorrecta');
         }
@@ -198,7 +201,6 @@ span {
         alert('Usuario no encontrado');
     }
 });
-
 
 
     // Cambia a la vista de registro
