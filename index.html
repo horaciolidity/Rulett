@@ -135,19 +135,9 @@ let premiosEstructura = [
     { tipo: 'sin premio', cantidad: 15 } // Calculado para llegar a 36 casilleros en total
 ];
 
-// Generar arreglo de premios basado en la estructura
-let premios = [];
-
-premiosEstructura.forEach(item => {
-    for (let i = 0; i < item.cantidad; i++) {
-        premios.push(item.tipo);
-    }
-
-    });
-
-// Mezclar los premios aleatoriamente
-premios.sort(() => Math.random() - 0.5);
-
+     let oportunidades = 3;
+     let premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4']; // Ajusta según tu juego
+     let premiosObtenidos = [];
  
       
       
