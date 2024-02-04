@@ -231,12 +231,12 @@ function inicializarPremios() {
     // Añadir premios
     premios.push('X10'); // 1 casillero x10
     for (let i = 0; i < 2; i++) premios.push('X2'); // 3 casilleros x2
-    for (let i = 0; i < 3; i++) premios.push('X1'); // 7 casilleros x1
-    for (let i = 0; i < 6; i++) premios.push('X0.3'); // 10 casilleros x0.5
+    for (let i = 0; i < 2; i++) premios.push('X1'); // 7 casilleros x1
+    for (let i = 0; i < 4; i++) premios.push('X0.3'); // 10 casilleros x0.5
 
     // Rellenar el resto de casilleros con 'Sin premio'
     while (premios.length < 36) {
-        premios.push('Sin premio');
+        premios.push('perdio');
     }
 
     // Mezclar los premios
