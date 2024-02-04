@@ -133,6 +133,27 @@ span {
      let oportunidades = 3;
      let premios = ['Premio 1', 'Premio 2', 'Premio 3', 'Premio 4']; // Ajusta según tu juego
      let premiosObtenidos = [];
+      // Estructura de los premios
+let premiosEstructura = [
+    { tipo: 'x10', cantidad: 1 },
+    { tipo: 'x2', cantidad: 3 },
+    { tipo: 'x1', cantidad: 7 },
+    { tipo: '0.5 WLD', cantidad: 10 },
+    { tipo: 'sin premio', cantidad: 15 } // Calculado para llegar a 36 casilleros en total
+];
+
+// Generar arreglo de premios basado en la estructura
+let premios = [];
+
+premiosEstructura.forEach(item => {
+    for (let i = 0; i < item.cantidad; i++) {
+        premios.push(item.tipo);
+    }
+});
+
+// Mezclar los premios aleatoriamente
+premios.sort(() => Math.random() - 0.5);
+
  
       
       
@@ -232,24 +253,17 @@ span {
     }
 
     // Función para manejar el click en un casillero
-    function elegirCasillero(event) {
-        if (oportunidades > 0) {
-            const casillero = event.target;
-            const premio = casillero.getAttribute('data-premio');
-            premiosObtenidos.push(premio);
-            casillero.innerText = premio;
-            casillero.style.pointerEvents = 'none'; // Deshabilitar más clicks en este casillero
-            casillero.style.backgroundColor = '#ddd'; // Cambio visual para indicar que este casillero ya fue elegido
-            oportunidades--;
-            actualizarOportunidades();
-            mostrarPremiosObtenidos();
+   function elegirCasillero(event) {
+    const casillero = event.target;
+    const premio = casillero.dataset.premio;
 
-            if (oportunidades === 0) {
-                // Opcional: Mostrar mensaje final o deshabilitar todos los casilleros
-                alert('No quedan más oportunidades');
-            }
-        }
-    }
+    // Mostrar el premio. Puedes ajustar esto para cambiar cómo se muestra.
+    alert(`Premio: ${premio}`);
+    
+    // Aquí podrías también deshabilitar el casillero para evitar que se seleccione nuevamente
+    casillero.style.pointerEvents = 'none';
+}
+
 
 
 
@@ -284,21 +298,20 @@ document.getElementById('irARegistro').addEventListener('click', function() {
 });
    
 
-    // Inicialización de la pizarra de premios
-    function inicializarPizarra() {
-        const pizarra = document.getElementById('pizarra');
-        for (let i = 0; i < premios.length; i++) {
-            const casillero = document.createElement('div');
-            casillero.classList.add('casillero');
-            casillero.setAttribute('data-premio', premios[i]);
-            casillero.addEventListener('click', elegirCasillero);
-            pizarra.appendChild(casillero);
-        }
-        actualizarOportunidades();
-    }
+function inicializarPizarra() {
+    const pizarra = document.getElementById('pizarra');
+    pizarra.innerHTML = ''; // Limpiar la pizarra antes de inicializar
 
-    inicializarPizarra();
-});
+    premios.forEach((premio, index) => {
+        const casillero = document.createElement('div');
+        casillero.classList.add('casillero');
+        casillero.dataset.premio = premio; // Asignar premio al casillero
+        casillero.dataset.index = index; // Asignar índice al casillero para referencia
+        casillero.addEventListener('click', elegirCasillero);
+        pizarra.appendChild(casillero);
+    });
+}
+
       
 
 </script>
