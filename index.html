@@ -223,6 +223,10 @@ span {
         document.getElementById('game-container').style.display = 'none';
     }
 
+function iniciarContador(tipo) {
+    let valorInicial = parseFloat(localStorage.getItem(`contador${tipo}`) || 0.00001);
+    actualizarContador(tipo, valorInicial);
+}
 
   
    
@@ -231,9 +235,12 @@ function inicializarContadores() {
     for (let i = 1; i <= 6; i++) {
         let valor = localStorage.getItem(`contador${i}`) || 0.00001;
         document.querySelector(`#contador${i} span`).textContent = valor.toFixed(5);
-        actualizarContador(i, valor);
+        document.getElementById(`iniciarContador${i}`).addEventListener('click', function() {
+            iniciarContador(i);
+        });
     }
 }
+
 function actualizarContador(tipo, valorInicial) {
     const incremento = 0.00001;
     const intervalos = [60000, 120000, 180000, 300000, 420000, 600000]; // Milisegundos
