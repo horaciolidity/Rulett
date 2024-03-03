@@ -106,27 +106,21 @@
             box-shadow: 0 0 15px #ff073a;
         }
 
-        #game-container {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Distribuye el contenido */
-            align-items: center;
-            padding-bottom: 20px; /* Espacio al final de la sección */
-            
-        }
+       #fakeEditor {
+    display: block; 
+    height: 200px; 
+    overflow-y: auto; 
+    margin-bottom: 20px; 
+    width: auto; 
+    border: 1px solid #ff073a;
+}
+
 
         ::placeholder {
             color: #0f0;
             opacity: 0.7;
         }
-    #fakeEditor {
-    display: block; /* o none, dependiendo de cuándo quieras mostrarlo */
-    /* Quita las propiedades position, top, left, transform, etc. */
-    height: 200px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-    border: 1px solid #ff073
+   
 
 #copyButton {
     display: block;
