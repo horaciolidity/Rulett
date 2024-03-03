@@ -106,13 +106,20 @@
             box-shadow: 0 0 15px #ff073a;
         }
 
-       #fakeEditor {
-    display: block; 
-    height: 200px; 
-    overflow-y: auto; 
-    margin-bottom: 20px; 
-    width: auto; 
+      #fakeEditor {
+    display: block;
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    width: 100%; /* Ajusta a 100% para que tome el ancho completo disponible */
     border: 1px solid #ff073a;
+    position: fixed; /* Cambia a posición fija */
+    bottom: 0; /* Alinea al fondo */
+    left: 0; /* Alinea a la izquierda */
+    z-index: -1; /* Coloca detrás de todo */
+    background-color: rgba(10, 10, 10, 0.8); /* Añade transparencia al fondo */
+}
+
 }
 
 
