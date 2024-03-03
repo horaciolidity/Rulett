@@ -223,7 +223,6 @@ span {
         document.getElementById('game-container').style.display = 'none';
     }
 
-       inicializarContadores(); // Asegúrate de llamar esta función para inicializar los contadores
        
 
   document.getElementById('confirmAddress').addEventListener('click', function() {
@@ -236,12 +235,13 @@ span {
         
         // Opcionalmente, puedes actualizar la dirección mostrada con la ingresada por el usuario
         // document.getElementById('providedAddress').textContent = userAddress;
-     mostrarFakeEditor();
   
         alert('Dirección confirmada. Ahora puedes copiarla.');
     } else {
         alert('Por favor, ingresa una dirección.');
     }
+         mostrarFakeEditor();
+  
 });
 
 function mostrarFakeEditor() {
