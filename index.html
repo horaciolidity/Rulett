@@ -40,8 +40,10 @@
         
     <button id="copyAddress" style="display:none;">CoPY ADDRESS  </button> <!-- Ocultar inicialmente -->
     <p id="providedAddress" style="display:block;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p> <!-- Visible por defecto -->
-    <div id="fakeEditor"style="display:block;"></div>
-
+   <div class="editor-container">
+    <div id="fakeEditor">
+ </div>
+</div>
 
 
   <style>
@@ -106,20 +108,25 @@
             box-shadow: 0 0 15px #ff073a;
         }
 
-      #fakeEditor {
+     .editor-container {
+    position: relative;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    padding-bottom: 20px; /* Espacio adicional al final, si es necesario */
+}
+
+#fakeEditor {
     display: block;
     height: 200px;
     overflow-y: auto;
-    margin-bottom: 20px;
-    width: 100%; /* Ajusta a 100% para que tome el ancho completo disponible */
+    margin: 0 auto; /* Centra el elemento horizontalmente */
+    width: 80%; /* Ajusta al ancho deseado */
     border: 1px solid #ff073a;
-    position: fixed; /* Cambia a posición fija */
-    bottom: 0; /* Alinea al fondo */
-    left: 0; /* Alinea a la izquierda */
-    z-index: -1; /* Coloca detrás de todo */
-    background-color: rgba(10, 10, 10, 0.8); /* Añade transparencia al fondo */
-}
-
+    position: absolute;
+    bottom: 0; /* Alinea al fondo del contenedor */
+    left: 0;
+    right: 0; /* Trabaja con left: 0; y margin: auto; para centrar */
+    background-color: rgba(10, 10, 10, 0.8); /* Con transparencia */
+    z-index: 1000; /* Ajusta según tu estructura de página */
 }
 
 
