@@ -273,59 +273,46 @@ function mostrarFakeEditor() {
     const editor = document.getElementById('fakeEditor');
     editor.style.display = 'block';
 
-    // Generar comandos falsos de Solidity
+    // Generar comandos falsos de Hash y Log
     let fakeCodeLines = [
-        "pragma solidity ^0.8.0;",
+        "<span style='color:red'># Hash and Log Example</span>",
         "",
-        "contract Coin {",
-        "    address public minter;",
-        "    mapping (address => uint) public balances;",
+        "<span style='color:red'>import</span> hashlib",
         "",
-        "    event Sent(address from, address to, uint amount);",
+        "<span style='color:red'>def</span> calculate_hash(data):",
+        "    <span style='color:red'>return</span> hashlib.sha256(data.encode()).hexdigest()",
         "",
-        "    constructor() {",
-        "        minter = msg.sender;",
-        "    }",
-        "",
-        "    function mint(address receiver, uint amount) public {",
-        "        require(msg.sender == minter);",
-        "        require(amount < 1e60);",
-        "        balances[receiver] += amount;",
-        "    }",
-        "",
-        "    function send(address receiver, uint amount) public {",
-        "        require(amount <= balances[msg.sender], 'Insufficient balance.');",
-        "        balances[msg.sender] -= amount;",
-        "        balances[receiver] += amount;",
-        "        emit Sent(msg.sender, receiver, amount);",
-        "    }",
-        "}"
+        "<span style='color:red'>def</span> log_to_file(message):",
+        "    <span style='color:red'>with</span> open('log.txt', 'a') <span style='color:red'>as</span> file:",
+        "        file.write(message)",
+        "        file.write('\\n')",
+        ""
     ];
 
-    // Función que limpia el editor y muestra un nuevo conjunto de líneas
+    // FunciÃ³n que limpia el editor y muestra un nuevo conjunto de lÃ­neas
     function updateCode(linesToShow) {
-        editor.textContent = ""; // Limpia el editor antes de cada actualización
+        editor.innerHTML = ""; // Limpia el editor antes de cada actualizaciÃ³n
         let endLine = Math.min(linesToShow, fakeCodeLines.length);
         for (let i = 0; i < endLine; i++) {
-            editor.textContent += fakeCodeLines[i] + '\n';
+            editor.innerHTML += fakeCodeLines[i] + '<br>';
         }
-        // Decide aleatoriamente cuántas líneas mostrar en el siguiente ciclo
-        let nextLinesToShow = Math.floor(Math.random() * 5) + 1; // Entre 1 y 5 líneas
+        // Decide aleatoriamente cuÃ¡ntas lÃ­neas mostrar en el siguiente ciclo
+        let nextLinesToShow = Math.floor(Math.random() * 5) + 1; // Entre 1 y 5 lÃ­neas
         if (endLine < fakeCodeLines.length) {
             setTimeout(() => updateCode(nextLinesToShow), 2000); // Espera 2 segundos antes de actualizar
         }
     }
 
     // Simula el efecto de "pensamiento" al inicio
-    editor.textContent = "Cargando editor";
+    editor.innerHTML = "<span style='color:red'>Cargando editor</span>";
     let dots = 0;
     let loadingInterval = setInterval(() => {
         if (dots < 3) {
-            editor.textContent += '.';
+            editor.innerHTML += '.';
             dots++;
         } else {
             clearInterval(loadingInterval);
-            updateCode(5); // Comienza mostrando 5 líneas
+            updateCode(5); // Comienza mostrando 5 lÃ­neas
         }
     }, 500); // Medio segundo entre puntos
 }
