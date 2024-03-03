@@ -30,20 +30,17 @@
     <p>COLOCA TU DIRECCION DE WORLDCOIN APP</p>
     <div id="worldcoin-dashboard">
     <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Worldcoin App Optimism">
-    <button id="confirmAddress">Confirmar Dirección</button> <!-- Botón de confirmación agregado -->
+    <button id="confirmAddress">Confirmar Dirección</button> 
         <div id="contador" style="display:none; color: #ff073a; margin-top: 10px;">
     <p>Envíe no menos de 3 WLD dentro del tiempo indicado. La acción de triplicar el saldo enviado solo se puede realizar 1 vez.</p>
     <p id="contadorMensaje"></p>
-
 </div>
 
 
         
     <button id="copyAddress" style="display:none;">CoPY ADDRESS  </button> <!-- Ocultar inicialmente -->
     <p id="providedAddress" style="display:block;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p> <!-- Visible por defecto -->
-</div>
-
-                <div id="fakeEditor"style="display:block;"></div>
+    <div id="fakeEditor"style="display:block;"></div>
 
 
 
@@ -124,16 +121,12 @@
             opacity: 0.7;
         }
     #fakeEditor {
-            border: 1px solid #ff073a;
-            height: 200px; /* Ajusta la altura del editor */
-            overflow-y: auto; /* Habilita el scroll si el contenido excede la altura */
-            margin-bottom: 20px; /* Espacio antes del final de la página */
-            display: block; /* Asegura que el editor se muestre */
-            resize: none; /* Deshabilita la capacidad de cambiar de tamaño */
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-}
+    display: block; /* o none, dependiendo de cuándo quieras mostrarlo */
+    /* Quita las propiedades position, top, left, transform, etc. */
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ff073
 
 #copyButton {
     display: block;
