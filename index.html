@@ -39,109 +39,78 @@
 </div>
 
 
-  <style>body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    text-align: center;
-    margin: 0; /* Asegurarse de que no hay margen exterior */
-}
-
-h1, h2 {
-    color: #333;
-}
-    @keyframes parpadeo {
-    0% {opacity: 1;}
-    50% {opacity: 0.5;}
-    100% {opacity: 1;}
-}
-
-.parpadeo {
-    animation: parpadeo 1s infinite;
-}
-  
-
-input[type="text"], input[type="password"] {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 80%; /* Ajusta al tamaño deseado */
-}
-
-.contador {
-            margin-bottom: 20px;
+  <style> body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0a0a0a;
+            color: #0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .contador span {
-            margin-right: 10px;
+        h1, h2 {
+            color: #ff073a;
         }
-      
 
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        input[type="text"], input[type="password"], input[type="email"] {
+            background-color: #222;
+            border: none;
+            color: #0f0;
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+        }
 
-button:hover {
-    background-color: #0056b3;
-}
+        button {
+            background-color: #333;
+            border: none;
+            color: #ff073a;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
 
-#pizarra {
-    display: grid;
-    grid-template-columns: repeat(6, 100px); /* Cambiado a 6 para acomodar 36 casilleros */
-    gap: 10px;
-}
+        button:hover {
+            background-color: #444;
+        }
 
+        a {
+            color: #ff073a;
+        }
 
-.casillero {
-    width: 50px; /* Ajusta el ancho de los casilleros */
-    height: 50px; /* Ajusta el alto de los casilleros */
-    margin: 5px; /* Ajusta el espacio entre los casilleros */
-    display: inline-block; /* Mantiene los casilleros en línea */
-    border: 1px solid #000; /* Opcional: añade un borde para visualizar mejor los casilleros */
-    text-align: center; /* Alinea el texto (premio) en el centro del casillero */
-    vertical-align: top; /* Alineación vertical para cuando el texto ocupe más de una línea */
-    line-height: 50px; /* Centra verticalmente el texto dentro del casillero */
-    cursor: pointer; /* Cambia el cursor a una mano cuando se pasa sobre los casilleros */
-}
+        .hidden {
+            display: none;
+        }
 
+        #bannerRegistro, #fakeEditor {
+            background-color: #222;
+            color: #0f0;
+            border: 1px solid #ff073a;
+            margin: auto;
+            padding: 20px;
+            width: 60%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #ff073a;
+        }
 
-.casillero:hover {
-    transform: scale(1.1); /* Efecto de crecimiento al pasar el mouse */
-    background-color: #ccc; /* Cambio de color al pasar el mouse */
-}
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
 
-.revelado {
-    background-color: #4CAF50;
-    color: white;
-}
-
-#vidas, #premiosObtenidos {
-    margin: 20px;
-    font-size: 20px;
-}
-
-#premiosObtenidos {
-    margin-top: 10px;
-}
-
-span {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-
-
+        ::placeholder {
+            color: #0f0;
+            opacity: 0.7;
+        }
 </style>
     
 </body>
