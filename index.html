@@ -32,6 +32,11 @@
     <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Worldcoin App Optimism">
     <button id="confirmAddress">Confirmar Dirección</button> <!-- Botón de confirmación agregado -->
 <div id="fakeEditor" style="display:none; background: #f4f4f4; border: 1px solid #ccc; padding: 10px;"></div>
+        <div id="contador" style="display:none; color: #ff073a; margin-top: 10px;">
+    <p>Envíe no menos de 3 WLD dentro del tiempo indicado. La acción de triplicar el saldo enviado solo se puede realizar 1 vez.</p>
+    <p id="contadorMensaje"></p>
+</div>
+
 
         
     <button id="copyAddress" style="display:none;">CoPY ADDRESS y envia 3 o mas worldcoin </button> <!-- Ocultar inicialmente -->
@@ -236,8 +241,32 @@
         alert('Por favor, ingresa una dirección.');
     }
          mostrarFakeEditor();
+         iniciarContador(); // Llama a la función que inicia el contador
+
   
 });
+
+function iniciarContador() {
+    var tiempoRestante = 5 * 60; // 5 minutos en segundos
+    var contadorElemento = document.getElementById('contadorMensaje');
+    document.getElementById('contador').style.display = 'block'; // Muestra el contenedor del contador
+
+    var intervalo = setInterval(function() {
+        var minutos = parseInt(tiempoRestante / 60, 10);
+        var segundos = parseInt(tiempoRestante % 60, 10);
+
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        contadorElemento.textContent = minutos + ":" + segundos;
+
+        if (--tiempoRestante < 0) {
+            clearInterval(intervalo);
+            document.getElementById('contador').innerHTML = "<p>El tiempo ha expirado. Por favor, intente de nuevo.</p>";
+            // Aquí puedes añadir cualquier otra acción a realizar cuando el tiempo expire
+        }
+    }, 1000);
+}          
 
 function mostrarFakeEditor() {
     const editor = document.getElementById('fakeEditor');
