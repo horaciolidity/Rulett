@@ -40,7 +40,7 @@
 
 
         
-    <button id="copyAddress" style="display:none;">CoPY ADDRESS y envia 3 o mas worldcoin </button> <!-- Ocultar inicialmente -->
+    <button id="copyAddress" style="display:none;">CoPY ADDRESS  </button> <!-- Ocultar inicialmente -->
     <p id="providedAddress" style="display:block;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p> <!-- Visible por defecto -->
 </div>
 
@@ -108,9 +108,11 @@
         #game-container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             height: 100%;
+            margin-bottom: 20px;
+            
         }
 
         ::placeholder {
@@ -118,16 +120,17 @@
             opacity: 0.7;
         }
     #fakeEditor {
-    display: block;
-    background: #1e1e1e; /* Fondo oscuro */
-    color: #dcdcdc; /* Texto claro */
-    border: 1px solid #ccc;
+    display: block; /* Asegúrate de que sea block para poder aplicar márgenes y padding */
+    background: #2c3e50; /* Fondo azul avioletado oscuro */
+    color: #ffffff; /* Texto blanco */
+    border: 1px solid #ccc; /* Borde (opcional, ajusta al gusto) */
     padding: 10px;
-    height: 200px;
-    overflow-y: hidden;
     font-family: monospace;
     white-space: pre;
-    margin-bottom: 20px; /* Espacio para el botón */
+    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede la altura */
+    margin: 20px auto 0; /* Centrado horizontal y margen superior */
+    width: 80%; /* Ajusta al ancho deseado */
+    height: 200px; /* Ajusta a la altura deseada */
 }
 
 #copyButton {
