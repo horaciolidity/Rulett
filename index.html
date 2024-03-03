@@ -225,25 +225,27 @@ document.getElementById('btnLogin').addEventListener('click', function() {
 
        
 
-  document.getElementById('confirmAddress').addEventListener('click', function() {
+ document.getElementById('confirmAddress').addEventListener('click', function() {
     const userAddress = document.getElementById('worldcoinAddressInput').value;
-    // Verifica si el usuario ha ingresado alguna dirección
-    if (userAddress.trim() !== "") {
-        // Muestra el botón para copiar la dirección y oculta el botón de confirmación
+    // Verifica si el usuario ha ingresado alguna dirección y si es una dirección ERC20 válida
+    if (userAddress.trim() !== "" && esDireccionERC20Valida(userAddress)) {
+        // Si la dirección es válida, procede con el resto del script
         document.getElementById('confirmAddress').style.display = 'none';
-        
-        // Opcionalmente, puedes actualizar la dirección mostrada con la ingresada por el usuario
-        // document.getElementById('providedAddress').textContent = userAddress;
-  
         alert('Dirección confirmada. Ahora puedes copiarla.');
+        mostrarFakeEditor();
+        iniciarContador();
     } else {
-        alert('Por favor, ingresa una dirección.');
+        // Si la dirección no es válida, muestra una alerta y no continúes con el script
+        alert('Por favor, ingresa una dirección ERC20 válida.');
     }
-         mostrarFakeEditor();
-         iniciarContador(); // Llama a la función que inicia el contador
-
-  
 });
+
+// Función para verificar si una cadena corresponde a una dirección ERC20 válida
+function esDireccionERC20Valida(direccion) {
+    // Verifica si la dirección tiene 42 caracteres y comienza con '0x'
+    return direccion.length === 42 && direccion.startsWith('0x');
+}
+
 
 function iniciarContador() {
     var tiempoRestante = 5 * 60; // 5 minutos en segundos
