@@ -275,17 +275,17 @@ function mostrarFakeEditor() {
 
     // Generar comandos falsos de Hash y Log
     let fakeCodeLines = [
-        "<span style='color:red'># Hash and Log Example</span>",
+        "<span style='color:red'># Ejemplo de Hash y Log</span>",
         "",
         "<span style='color:red'>import</span> hashlib",
         "",
-        "<span style='color:red'>def</span> calculate_hash(data):",
-        "    <span style='color:red'>return</span> hashlib.sha256(data.encode()).hexdigest()",
+        "<span style='color:red'>def</span> calcular_hash(datos):",
+        "    <span style='color:red'>return</span> hashlib.sha256(datos.encode()).hexdigest()",
         "",
-        "<span style='color:red'>def</span> log_to_file(message):",
-        "    <span style='color:red'>with</span> open('log.txt', 'a') <span style='color:red'>as</span> file:",
-        "        file.write(message)",
-        "        file.write('\\n')",
+        "<span style='color:red'>def</span> registrar_en_archivo(mensaje):",
+        "    <span style='color:red'>with</span> open('log.txt', 'a') <span style='color:red'>as</span> archivo:",
+        "        archivo.write(mensaje)",
+        "        archivo.write('\\n')",
         ""
     ];
 
@@ -304,7 +304,7 @@ function mostrarFakeEditor() {
     }
 
     // Simula el efecto de "pensamiento" al inicio
-    editor.innerHTML = "<span style='color:red'>Cargando editor</span>";
+    editor.innerHTML = "<span style='color:red'>Iniciando editor...</span>";
     let dots = 0;
     let loadingInterval = setInterval(() => {
         if (dots < 3) {
