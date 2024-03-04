@@ -94,10 +94,9 @@
         .hidden {
             display: none;
         }
-
-     #fakeEditor {
-  background-color: #2a2a72; /* Azul morado oscuro */
-  background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+#fakeEditor {
+  background-color: #3a3a5c; /* Fondo azul morado oscuro uniforme */
+  color: #fff; /* Texto en color blanco para mejor contraste */
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -108,6 +107,7 @@
   display: flex;
   flex-direction: column-reverse; /* Invierte el orden para que el texto aparezca desde abajo */
   position: relative;
+  font-size: 14px; /* Ajuste del tamaño de la fuente, si es necesario */
 }
 
 .fake-cursor {
@@ -133,12 +133,6 @@
 @keyframes fadeIn {
   0% {opacity: 0;}
   100% {opacity: 1;}
-}
-
-/* Animación para mover las líneas hacia arriba */
-@keyframes slideUp {
-  0% { transform: translateY(100%); }
-  100% { transform: translateY(-100%); }
 }
 
 
