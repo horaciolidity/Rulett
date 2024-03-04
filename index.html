@@ -73,27 +73,32 @@
             width: 40%;
         }
 
-        button {
-            background-color: #333;
-            border: none;
-            color: #ff073a;
-            cursor: pointer;
-            padding: 10px 20px;
-            margin: 10px 0;
-            transition: background-color 0.3s ease;
-        }
+button {
+    background-color: #333;
+    border: none;
+    color: #ff073a;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px 0;
+    transition: transform 0.1s ease, background-color 0.3s ease; /* Agregado transform a la transición */
+}
 
-        button:hover {
-            background-color: #444;
-        }
+button:hover {
+    background-color: #444;
+}
 
-        a {
-            color: #ff073a;
-        }
+button:active {
+    transform: scale(0.95); /* Hace que el botón se "comprima" al hacer clic */
+}
 
-        .hidden {
-            display: none;
-        }
+a {
+    color: #ff073a;
+}
+
+.hidden {
+    display: none;
+}
+
 #fakeEditor {
   width: 600px; /* Ancho del contenedor */
 
